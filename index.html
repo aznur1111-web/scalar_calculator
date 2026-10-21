@@ -1,1662 +1,1965 @@
 <!doctype html>
 <html lang="en">
- <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width,initial-scale=1" name="viewport"/>
-  <meta content="Aznur Scalar Studio — a fast, private, offline-capable converter and scientific calculator for SI, metric, US customary, imperial, Bangladesh land units, engineering and scientific quantities." name="description"/>
-  <meta content="no-referrer" name="referrer"/>
-  <title>
-   Aznur Scalar Studio
-  </title>
-  <style>
-   
-:root {
- --bg:#fafafa;
- --surface:#fff;
- --border:#e7e5e4;
- --text:#1c1917;
- --muted:#57534e;
- --accent:#f59e0b;
- --accent-hover:#d97706;
- --success:#10b981;
- --error:#ef4444;
- --info:#3b82f6;
- --radius:8px;
- --radius-lg:12px;
- --shadow:0 1px 2px rgba(0,0,0,.05)
-}
-*,*::before,*::after {
- box-sizing:border-box;
- margin:0;
- padding:0
-}
-body {
- font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
- background:var(--bg);
- color:var(--text);
- line-height:1.5
-}
-button,input,select {
- font:inherit
-}
-button {
- border:0
-}
-.container {
- max-width:1180px;
- margin:0 auto;
- padding:34px 20px 44px
-}
-header {
- text-align:center;
- margin-bottom:24px
-}
-h1 {
- font-size:2.45rem;
- line-height:1.1;
- margin-bottom:8px
-}
-h2 {
- font-size:1.18rem
-}
-h3 {
- font-size:1.02rem
-}
-.subtitle {
- max-width:850px;
- margin:0 auto;
- color:var(--muted);
- font-size:.94rem
-}
-.mode {
- display:flex;
- justify-content:center;
- gap:8px;
- margin:0 0 18px
-}
-.btn {
- padding:9px 16px;
- background:var(--text);
- color:#fff;
- border-radius:var(--radius);
- font-weight:700;
- cursor:pointer
-}
-.btn:hover {
- background:#333
-}
-.btn.secondary {
- background:var(--surface);
- color:var(--text);
- border:1px solid var(--border)
-}
-.btn.secondary:hover {
- background:var(--bg)
-}
-.btn.accent {
- background:var(--accent);
- color:#111
-}
-.btn.accent:hover {
- background:var(--accent-hover)
-}
-.btn.danger {
- background:var(--error)
-}
-.btn.sm {
- padding:6px 10px;
- font-size:.82rem
-}
-.btn:disabled {
- opacity:.55;
- cursor:not-allowed
-}
-.card {
- margin-bottom:16px;
- padding:20px;
- background:var(--surface);
- border:1px solid var(--border);
- border-radius:var(--radius-lg);
- box-shadow:var(--shadow)
-}
-.layout {
- display:grid;
- grid-template-columns:260px minmax(0,1fr);
- gap:16px
-}
-.side {
- position:sticky;
- top:14px;
- height:max-content
-}
-.grid {
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
- gap:14px
-}
-.g2 {
- display:grid;
- grid-template-columns:repeat(2,minmax(0,1fr));
- gap:14px
-}
-.fg {
- display:flex;
- flex-direction:column;
- gap:7px
-}
-.row {
- display:flex;
- align-items:center;
- gap:8px;
- flex-wrap:wrap
-}
-.sp {
- justify-content:space-between
-}
-.lr {
- display:flex;
- justify-content:space-between;
- align-items:center;
- gap:10px
-}
-label,.lbl {
- color:var(--muted);
- font-size:.74rem;
- font-weight:800;
- letter-spacing:.05em;
- text-transform:uppercase
-}
-input[type=text],input[type=number],select {
- width:100%;
- padding:10px 11px;
- background:var(--surface);
- color:var(--text);
- border:1px solid var(--border);
- border-radius:var(--radius);
- font-size:.93rem
-}
-input:focus,select:focus,button:focus-visible {
- outline:2px solid var(--accent);
- outline-offset:1px
-}
-.note,.hint {
- color:var(--muted);
- font-size:.76rem
-}
-.sub {
- padding-top:16px;
- margin:18px 0 11px;
- border-top:1px solid var(--border);
- color:var(--muted);
- font-size:.75rem;
- font-weight:800;
- letter-spacing:.05em;
- text-transform:uppercase
-}
-.search {
- margin-bottom:10px
-}
-.cat-list {
- max-height:66vh;
- overflow:auto;
- display:flex;
- flex-direction:column;
- gap:5px
-}
-.cat {
- display:flex;
- justify-content:space-between;
- gap:7px;
- width:100%;
- padding:9px 10px;
- background:var(--surface);
- border:1px solid transparent;
- border-radius:7px;
- color:var(--text);
- text-align:left;
- cursor:pointer
-}
-.cat:hover {
- background:#fffbeb
-}
-.cat.active {
- background:#fff7ed;
- border-color:#fed7aa
-}
-.cat small {
- color:var(--muted);
- font-size:.67rem
-}
-.group-title {
- padding:10px 8px 4px;
- color:var(--muted);
- font-size:.69rem;
- font-weight:800;
- letter-spacing:.06em;
- text-transform:uppercase
-}
-.result-box {
- padding:18px;
- background:#fffbeb;
- border:1px solid #fed7aa;
- border-radius:var(--radius);
- margin-top:12px
-}
-.result-main {
- display:flex;
- align-items:baseline;
- justify-content:space-between;
- gap:12px;
- flex-wrap:wrap
-}
-.result-value {
- font-size:2rem;
- font-weight:800;
- letter-spacing:-.02em;
- overflow-wrap:anywhere
-}
-.result-unit {
- font-size:1rem;
- color:var(--muted);
- font-weight:700
-}
-.formula {
- margin-top:7px;
- color:var(--muted);
- font-size:.78rem
-}
-.swap {
- min-width:42px
-}
-.table-wrap {
- margin-top:14px;
- border:1px solid var(--border);
- border-radius:var(--radius);
- overflow:auto;
- max-height:470px
-}
-.conv-table {
- width:100%;
- border-collapse:collapse;
- font-size:.84rem
-}
-.conv-table th,.conv-table td {
- padding:10px 11px;
- border-bottom:1px solid var(--border);
- text-align:left;
- white-space:nowrap
-}
-.conv-table th {
- position:sticky;
- top:0;
- background:#f7f5f3;
- color:var(--muted);
- font-size:.7rem;
- text-transform:uppercase;
- letter-spacing:.05em
-}
-.conv-table td:nth-child(2) {
- font-variant-numeric:tabular-nums
-}
-.copy {
- cursor:pointer;
- color:var(--accent-hover);
- font-weight:800
-}
-.basis {
- padding:10px 12px;
- margin-top:10px;
- border-radius:var(--radius);
- background:#f5f5f4;
- color:var(--muted);
- font-size:.76rem
-}
-.warn {
- border-left:4px solid var(--accent)
-}
-.calc-shell {
- display:grid;
- grid-template-columns:minmax(0,1fr) 280px;
- gap:16px
-}
-.display {
- padding:15px 16px;
- border:1px solid var(--border);
- border-radius:var(--radius);
- background:#111;
- color:#fff
-}
-.expr {
- min-height:25px;
- color:#d6d3d1;
- font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
- overflow:auto;
- white-space:nowrap
-}
-.answer {
- margin-top:4px;
- text-align:right;
- font-size:2.1rem;
- font-weight:800;
- overflow:auto;
- white-space:nowrap
-}
-.calc-meta {
- display:flex;
- justify-content:space-between;
- gap:8px;
- margin-top:9px;
- color:#a8a29e;
- font-size:.72rem
-}
-.keys {
- display:grid;
- grid-template-columns:repeat(5,1fr);
- gap:7px;
- margin-top:10px
-}
-.key {
- min-height:44px;
- padding:9px 5px;
- background:var(--surface);
- border:1px solid var(--border);
- border-radius:var(--radius);
- cursor:pointer;
- font-weight:750
-}
-.key:hover {
- background:#f5f5f4
-}
-.key.op {
- background:#fff7ed;
- border-color:#fed7aa
-}
-.key.eq {
- background:var(--accent);
- color:#111
-}
-.key.fn {
- font-weight:650;
- color:var(--muted)
-}
-.history {
- max-height:390px;
- overflow:auto
-}
-.hist-item {
- padding:9px 0;
- border-bottom:1px solid var(--border);
- cursor:pointer
-}
-.hist-item:last-child {
- border-bottom:0
-}
-.hist-expr {
- font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
- font-size:.76rem;
- color:var(--muted);
- overflow:hidden;
- text-overflow:ellipsis;
- white-space:nowrap
-}
-.hist-res {
- font-weight:800;
- font-variant-numeric:tabular-nums
-}
-.constants {
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:7px
-}
-.const {
- padding:8px;
- border:1px solid var(--border);
- border-radius:var(--radius);
- background:var(--bg);
- cursor:pointer;
- font-size:.78rem
-}
-.const b {
- display:block
-}
-.quick {
- display:grid;
- grid-template-columns:repeat(3,minmax(0,1fr));
- gap:10px
-}
-.quick .tool {
- padding:13px;
- border:1px solid var(--border);
- border-radius:var(--radius);
- background:var(--bg)
-}
-.tool p {
- font-size:.76rem;
- color:var(--muted);
- margin-top:4px
-}
-.tool-box {
- padding:13px;
- background:var(--bg);
- border:1px solid var(--border);
- border-radius:var(--radius)
-}
-.tool-box p {
- margin-top:5px
-}
-.tag {
- display:inline-block;
- padding:3px 7px;
- background:#f5f5f4;
- border-radius:4px;
- color:var(--muted);
- font-size:.67rem;
- font-weight:800;
- text-transform:uppercase
-}
-.status {
- padding:8px 10px;
- border:1px solid var(--border);
- border-radius:var(--radius);
- font-size:.78rem;
- color:var(--muted);
- background:var(--bg)
-}
-#toasts {
- position:fixed;
- top:14px;
- right:14px;
- z-index:1000;
- display:flex;
- flex-direction:column;
- gap:8px;
- width:min(350px,calc(100vw - 28px))
-}
-.toast {
- padding:10px 13px;
- background:var(--surface);
- border:1px solid var(--border);
- border-left:4px solid var(--success);
- border-radius:var(--radius);
- box-shadow:0 4px 14px rgba(0,0,0,.1);
- font-size:.84rem
-}
-.toast.err {
- border-left-color:var(--error)
-}
-.toast.warn {
- border-left-color:var(--accent)
-}
-footer {
- margin-top:22px;
- padding-top:16px;
- border-top:1px solid var(--border);
- text-align:center;
- color:var(--muted);
- font-size:.78rem
-}
-.hidden {
- display:none!important
-}
-@media(max-width:900px) {
- .layout {
- grid-template-columns:1fr
- }
- .side {
- position:static
- }
- .cat-list {
- max-height:280px
- }
- .calc-shell {
- grid-template-columns:1fr
- }
- .quick {
- grid-template-columns:1fr 1fr
- }
-}
-@media(max-width:620px) {
- h1 {
- font-size:2rem
- }
- .container {
- padding:24px 12px 34px
- }
- .g2 {
- grid-template-columns:1fr
- }
- .keys {
- gap:5px
- }
- .key {
- min-height:41px;
- font-size:.84rem
- }
- .quick {
- grid-template-columns:1fr
- }
- .result-value {
- font-size:1.55rem
- }
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Aznur Scalar Studio — a fast, private, offline-capable converter and scientific calculator for SI, metric, US customary, imperial, Bangladesh land units, engineering and scientific quantities." name="description"/>
+<meta content="no-referrer" name="referrer"/>
+<meta name="color-scheme" content="light dark"/>
+<title>Aznur Scalar Studio</title>
+<style>
+/* ============================================================
+   Design system — Aznur Index (warm-neutral, single amber accent)
+   ============================================================ */
+:root{
+  color-scheme: light dark;
+  --bg:#fdfcfc; --fg:#201d1d; --dim:#646262; --faint:#9a9898;
+  --line:#dcd9d9; --accent:#b45309; --accent-fg:#fdfcfc;
+  --active:#f4f0ef; --surface:#faf8f7;
+  --font:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --radius:4px; --maxw:72rem; --pad:1rem;
+}
+@media (min-width:640px){ :root{ --pad:1.5rem; } }
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#161313; --fg:#f1eeee; --dim:#9a9898; --faint:#646262;
+  --line:#302c2c; --accent:#f59e0b; --accent-fg:#161313;
+  --active:#211d1d; --surface:#1c1818;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#161313; --fg:#f1eeee; --dim:#9a9898; --faint:#646262;
+    --line:#302c2c; --accent:#f59e0b; --accent-fg:#161313;
+    --active:#211d1d; --surface:#1c1818;
+  }
 }
 
-  </style>
- </head>
- <body>
-  <div id="toasts">
-  </div>
-  <div class="container">
-   <header>
-    <h1>
-     Aznur Scalar Studio
-    </h1>
-    <p class="subtitle">
-     A broad, private scalar-quantity converter and scientific calculator covering SI, metric, US customary, imperial, Bangladesh land measurements, engineering, electronics, physics, chemistry and everyday units. Everything runs locally in this browser.
-    </p>
-   </header>
-   <div class="mode">
-    <button class="btn accent" id="mConverter">
-     Converter
-    </button>
-    <button class="btn secondary" id="mCalculator">
-     Calculator
-    </button>
-   </div>
-   <section id="converterMode">
-    <div class="layout">
-     <aside class="card side">
-      <div class="sp row">
-       <h3>
-        Quantity
-       </h3>
-       <span class="tag" id="unitCount">
-        0 units
-       </span>
-      </div>
-      <input autocomplete="off" class="search" id="catSearch" placeholder="Search quantity…" spellcheck="false" type="text"/>
-      <div class="cat-list" id="catList">
-      </div>
-     </aside>
-     <main>
-      <section class="card">
-       <div class="sp row">
-        <div>
-         <h2 id="catTitle">
-          Length
-         </h2>
-         <p class="note" id="catNote">
-         </p>
-        </div>
-        <div class="row">
-         <button class="btn secondary sm" id="copyResult">
-          Copy result
-         </button>
-         <button class="btn secondary sm" id="resetConverter">
-          Reset
-         </button>
-        </div>
-       </div>
-       <div class="g2" style="margin-top:15px">
-        <div class="fg">
-         <label>
-          Value
-         </label>
-         <input id="amount" inputmode="decimal" step="any" type="number" value="1"/>
-        </div>
-        <div class="fg">
-         <label>
-          Precision
-         </label>
-         <select id="precision">
-          <option value="2">
-           2 significant digits
-          </option>
-          <option value="4">
-           4 significant digits
-          </option>
-          <option selected="" value="6">
-           6 significant digits
-          </option>
-          <option value="8">
-           8 significant digits
-          </option>
-          <option value="12">
-           12 significant digits
-          </option>
-         </select>
-        </div>
-       </div>
-       <div class="g2" style="margin-top:12px">
-        <div class="fg">
-         <label>
-          From
-         </label>
-         <select id="fromUnit">
-         </select>
-        </div>
-        <div class="fg">
-         <label>
-          To
-         </label>
-         <select id="toUnit">
-         </select>
-        </div>
-       </div>
-       <div class="row" style="margin-top:12px">
-        <button class="btn secondary swap" id="swapUnits">
-         ⇄ Swap
-        </button>
-        <button class="btn accent" id="convertBtn">
-         Convert
-        </button>
-        <button class="btn secondary" id="allUnits">
-         Convert to all units
-        </button>
-       </div>
-       <div class="result-box" id="resultBox">
-        <div class="result-main">
-         <div>
-          <div class="result-value" id="resultValue">
-           1
-          </div>
-          <div class="result-unit" id="resultUnit">
-           meter (m)
-          </div>
-         </div>
-         <div class="status" id="resultStatus">
-          Exact factor conversion
-         </div>
-        </div>
-        <div class="formula" id="formula">
-        </div>
-       </div>
-       <div class="basis hidden" id="basis">
-       </div>
-       <div class="table-wrap hidden" id="tableWrap">
-        <table class="conv-table">
-         <thead>
-          <tr>
-           <th>
-            Unit
-           </th>
-           <th>
-            Value
-           </th>
-           <th>
-            Symbol / note
-           </th>
-           <th>
-           </th>
-          </tr>
-         </thead>
-         <tbody id="allTable">
-         </tbody>
-        </table>
-       </div>
-      </section>
-      <section class="card">
-       <div class="sp row">
-        <h2>
-         Quick calculators
-        </h2>
-        <span class="tag">
-         local only
-        </span>
-       </div>
-       <div class="quick" style="margin-top:12px">
-        <div class="tool">
-         <b>
-          Percentage
-         </b>
-         <p>
-          Find x% of a number.
-         </p>
-         <div class="row" style="margin-top:8px">
-          <input id="pctBase" step="any" type="number" value="100"/>
-          <input id="pctRate" step="any" type="number" value="15"/>
-         </div>
-         <p id="pctOut">
-          15% of 100 = 15
-         </p>
-        </div>
-        <div class="tool">
-         <b>
-          Area from dimensions
-         </b>
-         <p>
-          Length × width, with unit conversion.
-         </p>
-         <div class="row" style="margin-top:8px">
-          <input id="lenA" step="any" type="number" value="10"/>
-          <input id="lenB" step="any" type="number" value="20"/>
-         </div>
-         <p id="areaOut">
-          10 × 20 = 200 m²
-         </p>
-        </div>
-        <div class="tool">
-         <b>
-          Speed / distance / time
-         </b>
-         <p>
-          Choose two values and derive the third.
-         </p>
-         <select id="sdMode" style="margin-top:8px">
-          <option value="speed">
-           Speed = distance ÷ time
-          </option>
-          <option value="distance">
-           Distance = speed × time
-          </option>
-          <option value="time">
-           Time = distance ÷ speed
-          </option>
-         </select>
-         <p id="sdOut">
-          Enter values in the calculator section.
-         </p>
-        </div>
-       </div>
-      </section>
-      <section class="card">
-       <div class="sp row">
-        <div>
-         <h2>
-          Coverage
-         </h2>
-         <p class="note">
-          Designed around SI base/derived quantities plus widely used international and regional units. SI itself is based on seven defining constants and has an extensive family of derived units.
-         </p>
-        </div>
-       </div>
-       <div class="grid" id="coverageCards" style="margin-top:12px">
-       </div>
-      </section>
-     </main>
+*,*::before,*::after{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; }
+body{
+  font:14.5px/1.65 var(--font);
+  background:var(--bg); color:var(--fg);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+[hidden],.hidden{ display:none !important; }
+:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; border-radius:2px; }
+button{ font:inherit; color:inherit; cursor:pointer; }
+a{ color:inherit; text-decoration:none; }
+img,svg{ max-width:100%; display:block; }
+code{ font-family:inherit; font-size:.95em; }
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{ transition:none !important; animation:none !important; }
+}
+
+/* ------------------------------------------------------------
+   Layout
+   ------------------------------------------------------------ */
+.wrap{ max-width:var(--maxw); margin:0 auto; padding:0 var(--pad); }
+
+/* ------------------------------------------------------------
+   Topbar
+   ------------------------------------------------------------ */
+.topbar{ border-bottom:1px solid var(--line); }
+.topbar-inner{ display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:.85rem 0; min-height:56px; }
+.brand{ font-size:15px; font-weight:600; letter-spacing:-.01em; }
+.brand .slash{ color:var(--faint); margin:0 .1em; }
+.topbar-tools{ display:flex; align-items:center; gap:.5rem; }
+
+/* ------------------------------------------------------------
+   Typography helpers
+   ------------------------------------------------------------ */
+.eyebrow{
+  font-size:10px; line-height:1.4; font-weight:500;
+  text-transform:uppercase; letter-spacing:.12em;
+  color:var(--accent); margin:0 0 .5rem;
+}
+.lede{ max-width:72ch; color:var(--dim); font-size:14px; margin:0; }
+.note{ color:var(--dim); font-size:12px; line-height:1.55; margin:.35rem 0 0; }
+.hint{ color:var(--dim); font-size:12px; margin:.4rem 0 0; }
+.sub{
+  font-size:10px; text-transform:uppercase; letter-spacing:.12em;
+  color:var(--dim); margin:1.15rem 0 .55rem;
+  padding-top:.75rem; border-top:1px solid var(--line);
+}
+
+/* ------------------------------------------------------------
+   Hero
+   ------------------------------------------------------------ */
+.hero{ padding:2.25rem 0 1.25rem; }
+.hero h1{
+  font-size:clamp(1.5rem,4vw,2.25rem); font-weight:600;
+  letter-spacing:-.02em; line-height:1.15; margin:.2rem 0 .65rem;
+}
+
+/* ------------------------------------------------------------
+   Mode tabs
+   ------------------------------------------------------------ */
+.mode-tabs{
+  display:flex; gap:.25rem; margin:0 0 1.25rem;
+  border-bottom:1px solid var(--line);
+}
+.tab{
+  background:transparent; border:0;
+  padding:.55rem .9rem; min-height:42px;
+  color:var(--dim); font-weight:500; letter-spacing:.01em;
+  border-bottom:2px solid transparent; margin-bottom:-1px;
+}
+.tab:hover{ color:var(--fg); }
+.tab[aria-selected="true"]{
+  color:var(--fg); border-bottom-color:var(--accent);
+}
+
+/* ------------------------------------------------------------
+   Cards
+   ------------------------------------------------------------ */
+.card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:1.1rem 1.15rem;
+  margin-bottom:1rem;
+}
+.card h2{
+  font-size:1.05rem; font-weight:600; letter-spacing:-.01em;
+  margin:0; line-height:1.25;
+}
+.card h3{
+  font-size:.98rem; font-weight:600; letter-spacing:-.01em;
+  margin:0;
+}
+.row{ display:flex; align-items:center; gap:.5rem; flex-wrap:wrap; }
+.sp{ justify-content:space-between; }
+
+/* ------------------------------------------------------------
+   Layout: converter two-column
+   ------------------------------------------------------------ */
+.layout{
+  display:grid;
+  grid-template-columns:280px minmax(0,1fr);
+  gap:1rem;
+}
+.side{ position:sticky; top:14px; height:max-content; }
+
+/* ------------------------------------------------------------
+   Form fields
+   ------------------------------------------------------------ */
+.field-grid{
+  display:grid; gap:.9rem;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));
+}
+.g2{ display:grid; gap:.9rem; grid-template-columns:repeat(2,minmax(0,1fr)); }
+.fg{ display:flex; flex-direction:column; gap:.35rem; min-width:0; }
+.field-head{ display:flex; align-items:center; justify-content:space-between; gap:.5rem; }
+label,.lbl{
+  font-size:10px; text-transform:uppercase; letter-spacing:.1em;
+  color:var(--dim); font-weight:600;
+}
+input[type=text],input[type=number],select{
+  width:100%; min-height:36px;
+  padding:.45rem .65rem;
+  font:inherit; font-size:13.5px;
+  color:var(--fg); background:var(--surface);
+  border:1px solid var(--line); border-radius:var(--radius);
+}
+input[type=text]:hover,input[type=number]:hover,select:hover{ border-color:var(--accent); }
+input[type=text]:focus-visible,input[type=number]:focus-visible,select:focus-visible{ outline-offset:1px; }
+
+/* ------------------------------------------------------------
+   Buttons
+   ------------------------------------------------------------ */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  gap:.4rem; min-height:36px; padding:.45rem .9rem;
+  font:inherit; font-size:13.5px; font-weight:600;
+  color:var(--fg); background:var(--surface);
+  border:1px solid var(--line); border-radius:var(--radius);
+  transition:border-color .15s, background .15s, color .15s;
+}
+.btn:hover{ border-color:var(--accent); }
+.btn:disabled{ opacity:.5; cursor:not-allowed; }
+.btn.accent{
+  background:var(--accent); color:var(--accent-fg);
+  border-color:var(--accent);
+}
+.btn.accent:hover{ filter:brightness(1.05); }
+.btn.secondary{ background:var(--surface); }
+.btn.danger{ color:var(--accent); border-color:var(--accent); }
+.btn.sm{ min-height:30px; padding:.3rem .6rem; font-size:12px; }
+.btn.ghost{ background:transparent; border-color:transparent; }
+.btn.ghost:hover{ border-color:var(--line); }
+
+/* ------------------------------------------------------------
+   Search wrapper
+   ------------------------------------------------------------ */
+.search-wrap{
+  display:flex; align-items:center; gap:.35rem;
+  padding:.25rem .5rem; min-height:34px;
+  background:var(--surface); border:1px solid var(--line);
+  border-radius:var(--radius);
+}
+.search-wrap .prompt{ color:var(--accent); font-weight:600; font-size:13px; }
+.search-wrap input{
+  flex:1; min-width:0; min-height:26px; padding:0;
+  background:transparent; border:0; border-radius:0;
+}
+.search-wrap input:focus-visible{ outline:none; }
+.search-wrap:focus-within{ border-color:var(--accent); outline:1px solid var(--accent); outline-offset:0; }
+kbd{
+  font:inherit; font-size:10.5px;
+  padding:.05rem .35rem;
+  border:1px solid var(--line); border-radius:3px;
+  background:var(--active); color:var(--dim);
+  letter-spacing:.02em;
+}
+
+/* ------------------------------------------------------------
+   Category list
+   ------------------------------------------------------------ */
+.cat-list{
+  max-height:60vh;
+  overflow:auto;
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  margin-top:.65rem;
+}
+.group-title{
+  padding:.65rem .1rem .25rem;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--faint);
+  font-weight:500;
+}
+.cat{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:.5rem;
+  width:100%;
+  padding:.5rem .6rem;
+  min-height:36px;
+  background:transparent;
+  color:var(--fg);
+  border:1px solid transparent;
+  border-radius:4px;
+  font:inherit;
+  font-size:13px;
+  text-align:left;
+  cursor:pointer;
+  transition:border-color .15s, background .15s;
+}
+.cat:hover{
+  border-color:var(--line);
+  background:var(--active);
+}
+.cat.active{
+  background:var(--active);
+  border-color:var(--line);
+  font-weight:600;
+}
+.cat small{
+  color:var(--faint);
+  font-size:10px;
+  font-variant-numeric:tabular-nums;
+}
+
+/* ------------------------------------------------------------
+   Tag / status chips
+   ------------------------------------------------------------ */
+.tag{
+  display:inline-block;
+  padding:.15rem .5rem;
+  border:1px solid var(--line);
+  border-radius:3px;
+  color:var(--dim);
+  font-size:10px;
+  font-weight:500;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  background:var(--bg);
+}
+.status{
+  display:inline-block;
+  padding:.2rem .55rem;
+  border:1px solid var(--line);
+  border-radius:3px;
+  font-size:11px;
+  color:var(--dim);
+  background:var(--bg);
+}
+
+/* ------------------------------------------------------------
+   Result box
+   ------------------------------------------------------------ */
+.result-box{
+  margin-top:1rem;
+  padding:.9rem 1rem;
+  background:var(--active);
+  border:1px solid var(--line);
+  border-radius:4px;
+}
+.result-main{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:.85rem;
+  flex-wrap:wrap;
+}
+.result-value{
+  font-size:clamp(1.5rem,3vw,2rem);
+  font-weight:600;
+  letter-spacing:-.02em;
+  overflow-wrap:anywhere;
+  font-variant-numeric:tabular-nums;
+  line-height:1.15;
+}
+.result-unit{
+  font-size:12.5px;
+  color:var(--dim);
+  font-weight:500;
+  margin-top:.15rem;
+}
+.formula{
+  margin-top:.5rem;
+  color:var(--dim);
+  font-size:12px;
+  font-variant-numeric:tabular-nums;
+}
+
+/* ------------------------------------------------------------
+   Basis / note callout
+   ------------------------------------------------------------ */
+.basis{
+  margin-top:.75rem;
+  padding:.6rem .8rem;
+  background:var(--active);
+  border:1px solid var(--line);
+  border-left:3px solid var(--accent);
+  border-radius:4px;
+  color:var(--dim);
+  font-size:12px;
+  line-height:1.55;
+}
+
+/* ------------------------------------------------------------
+   Table
+   ------------------------------------------------------------ */
+.table-controls{ margin-top:.85rem; }
+.table-controls .search-wrap{ max-width:320px; }
+.table-wrap{
+  margin-top:.65rem;
+  border:1px solid var(--line);
+  border-radius:4px;
+  overflow:auto;
+  max-height:470px;
+}
+.conv-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:13px;
+}
+.conv-table th,.conv-table td{
+  padding:.55rem .7rem;
+  border-bottom:1px dashed var(--line);
+  text-align:left;
+  white-space:nowrap;
+}
+.conv-table th{
+  position:sticky;
+  top:0;
+  background:var(--bg);
+  color:var(--dim);
+  font-size:10px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  border-bottom-style:solid;
+}
+.conv-table tbody tr:last-child td{ border-bottom:0; }
+.conv-table td:nth-child(2){
+  font-variant-numeric:tabular-nums;
+  font-weight:500;
+}
+.copy{
+  background:transparent;
+  border:1px solid var(--line);
+  border-radius:3px;
+  padding:.15rem .5rem;
+  font-size:11px;
+  font-weight:500;
+  color:var(--dim);
+  cursor:pointer;
+  transition:border-color .15s, color .15s;
+}
+.copy:hover{ border-color:var(--accent); color:var(--accent); }
+
+/* ------------------------------------------------------------
+   Quick calculators
+   ------------------------------------------------------------ */
+.quick{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));
+  gap:.7rem;
+  margin-top:.85rem;
+}
+.tool{
+  padding:.85rem;
+  background:var(--bg);
+  border:1px solid var(--line);
+  border-radius:4px;
+}
+.tool b{ font-size:13px; font-weight:600; }
+.tool p{ font-size:12px; color:var(--dim); margin-top:.35rem; }
+.tool .row{ margin-top:.5rem; gap:.4rem; }
+.tool .row input{ flex:1; min-width:0; }
+
+/* ------------------------------------------------------------
+   Coverage grid
+   ------------------------------------------------------------ */
+.coverage-grid{
+  display:grid; gap:.55rem;
+  grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));
+  margin-top:.85rem;
+}
+.tool-box{
+  padding:.7rem .8rem;
+  background:var(--bg);
+  border:1px solid var(--line);
+  border-radius:4px;
+}
+.tool-box b{ font-size:13px; font-weight:600; }
+.tool-box p{ font-size:11.5px; color:var(--dim); margin-top:.2rem; }
+
+/* ------------------------------------------------------------
+   Calculator
+   ------------------------------------------------------------ */
+.calc-shell{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 300px;
+  gap:1rem;
+}
+.display{
+  padding:.85rem 1rem;
+  border:1px solid var(--line);
+  border-radius:4px;
+  background:var(--active);
+}
+.expr{
+  min-height:22px;
+  color:var(--dim);
+  font-size:13px;
+  overflow:auto;
+  white-space:nowrap;
+}
+.answer{
+  margin-top:.2rem;
+  text-align:right;
+  font-size:clamp(1.75rem,4vw,2.2rem);
+  font-weight:600;
+  letter-spacing:-.02em;
+  overflow:auto;
+  white-space:nowrap;
+  font-variant-numeric:tabular-nums;
+  line-height:1.1;
+}
+.calc-meta{
+  display:flex;
+  justify-content:space-between;
+  gap:.5rem;
+  margin-top:.55rem;
+  color:var(--faint);
+  font-size:11px;
+  flex-wrap:wrap;
+}
+.keys{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:.35rem;
+  margin-top:.65rem;
+}
+.key{
+  min-height:42px;
+  padding:.4rem .3rem;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:4px;
+  font:inherit;
+  font-size:13px;
+  font-weight:500;
+  color:var(--fg);
+  cursor:pointer;
+  transition:border-color .15s, background .15s;
+}
+.key:hover{ border-color:var(--accent); background:var(--active); }
+.key.op{
+  background:var(--active);
+  font-weight:600;
+}
+.key.eq{
+  background:var(--accent);
+  color:var(--accent-fg);
+  border-color:var(--accent);
+  font-weight:700;
+}
+.key.eq:hover{ filter:brightness(1.05); }
+.key.fn{ color:var(--dim); font-weight:500; }
+
+.history{
+  max-height:340px;
+  overflow:auto;
+}
+.hist-item{
+  padding:.5rem 0;
+  border-bottom:1px dashed var(--line);
+  cursor:pointer;
+}
+.hist-item:last-child{ border-bottom:0; }
+.hist-item:hover .hist-res{ color:var(--accent); }
+.hist-expr{
+  font-size:11.5px;
+  color:var(--dim);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.hist-res{
+  font-weight:600;
+  font-variant-numeric:tabular-nums;
+  font-size:13px;
+  transition:color .15s;
+}
+.constants{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:.35rem;
+  margin-top:.5rem;
+}
+.const{
+  padding:.45rem .55rem;
+  border:1px solid var(--line);
+  border-radius:4px;
+  background:var(--bg);
+  cursor:pointer;
+  font:inherit;
+  font-size:11.5px;
+  text-align:left;
+  color:var(--fg);
+  transition:border-color .15s, background .15s;
+}
+.const:hover{ border-color:var(--accent); background:var(--active); }
+.const b{ display:block; font-weight:600; font-size:12px; }
+.const span{ display:block; color:var(--dim); font-size:11px; margin-top:.1rem; font-variant-numeric:tabular-nums; }
+
+/* ------------------------------------------------------------
+   Toasts
+   ------------------------------------------------------------ */
+#toasts{
+  position:fixed; top:1rem; right:1rem;
+  display:flex; flex-direction:column; gap:.5rem;
+  width:min(360px, calc(100vw - 2rem));
+  z-index:1000;
+}
+.toast{
+  display:flex; gap:.55rem; align-items:flex-start;
+  padding:.55rem .7rem;
+  background:var(--surface); color:var(--fg);
+  border:1px solid var(--line);
+  border-left:3px solid var(--accent);
+  border-radius:4px;
+  font-size:12.5px;
+  box-shadow:0 2px 8px rgba(0,0,0,.06);
+}
+.toast-mark{ color:var(--accent); font-weight:600; flex-shrink:0; }
+
+/* ------------------------------------------------------------
+   Footer
+   ------------------------------------------------------------ */
+footer{
+  margin-top:2.5rem;
+  padding:1.25rem 0 2rem;
+  border-top:1px solid var(--line);
+  color:var(--dim);
+  font-size:12px;
+}
+.footer-row{
+  display:flex; justify-content:space-between; align-items:center;
+  gap:1rem; flex-wrap:wrap; margin-bottom:.65rem;
+}
+.footer-hints{ display:flex; gap:.85rem; flex-wrap:wrap; align-items:center; }
+.footer-hints span{ display:inline-flex; align-items:center; gap:.3rem; }
+
+/* ------------------------------------------------------------
+   Responsive
+   ------------------------------------------------------------ */
+@media (max-width:900px){
+  .layout{ grid-template-columns:1fr; }
+  .side{ position:static; }
+  .cat-list{ max-height:280px; }
+  .calc-shell{ grid-template-columns:1fr; }
+  .quick{ grid-template-columns:1fr 1fr; }
+}
+@media (max-width:620px){
+  .hero{ padding:1.5rem 0 1rem; }
+  .container-pad{ padding:0 12px; }
+  .g2{ grid-template-columns:1fr; }
+  .keys{ gap:.3rem; }
+  .key{ min-height:40px; font-size:12px; }
+  .quick{ grid-template-columns:1fr; }
+  .result-value{ font-size:1.5rem; }
+  .mode-tabs{ gap:0; }
+  .tab{ flex:1; text-align:center; }
+  .topbar-tools .eyebrow{ display:none; }
+}
+</style>
+</head>
+<body>
+
+<div id="toasts" aria-live="polite" aria-atomic="false"></div>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="#">aznur<span class="slash">/</span>scalar</a>
+    <div class="topbar-tools">
+      <label class="eyebrow" for="theme1" style="margin:0;">Theme</label>
+      <select id="theme1" aria-label="Theme" style="min-width:104px;min-height:32px;font-size:12px;">
+        <option value="system">System</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+      </select>
     </div>
-   </section>
-   <section class="hidden" id="calculatorMode">
-    <section class="card">
-     <div class="calc-shell">
-      <div>
-       <div class="display">
-        <div class="expr" id="calcExpr">
-         0
-        </div>
-        <div class="answer" id="calcAnswer">
-         0
-        </div>
-        <div class="calc-meta">
-         <span id="angleModeLabel">
-          Angle: DEG
-         </span>
-         <span>
-          Safe parser · no eval()
-         </span>
-        </div>
-       </div>
-       <div class="row" style="margin-top:9px">
-        <button class="btn secondary sm" id="angleToggle">
-         DEG
-        </button>
-        <button class="btn secondary sm" id="backspace">
-         ⌫
-        </button>
-        <button class="btn secondary sm" id="clearCalc">
-         C
-        </button>
-        <button class="btn secondary sm" id="memoryCopy">
-         Copy answer
-        </button>
-       </div>
-       <div class="keys" id="calcKeys">
-       </div>
-      </div>
-      <aside>
-       <div class="sp row">
-        <h3>
-         History
-        </h3>
-        <button class="btn secondary sm" id="clearHistory">
-         Clear
-        </button>
-       </div>
-       <div class="history" id="history" style="margin-top:8px">
-       </div>
-       <h4 class="sub">
-        Constants
-       </h4>
-       <div class="constants" id="constants">
-       </div>
-      </aside>
-     </div>
-    </section>
-    <section class="card">
-     <h2>
-      Built-in calculator functions
-     </h2>
-     <div class="grid" style="margin-top:12px">
-      <div class="tool-box">
-       <b>
-        Arithmetic
-       </b>
-       <p class="note">
-        +, −, ×, ÷, powers (^), %, parentheses, unary minus.
-       </p>
-      </div>
-      <div class="tool-box">
-       <b>
-        Scientific
-       </b>
-       <p class="note">
-        sin, cos, tan, asin, acos, atan, sqrt, cbrt, ln, log, exp, abs, floor, ceil, round.
-       </p>
-      </div>
-      <div class="tool-box">
-       <b>
-        Constants
-       </b>
-       <p class="note">
-        π, e, c, g, G, h, kB, NA and more. Toggle DEG/RAD for trigonometry.
-       </p>
-      </div>
-     </div>
-    </section>
-   </section>
-   <footer>
-    <p>
-     <b>
-      Aznur Scalar Studio
-     </b>
-     · Browser-local calculations · No external JavaScript libraries · No uploads.
-    </p>
-    <p style="margin-top:4px">
-     Regional land measures can differ by local convention. The Bangladesh defaults follow the commonly published Ministry of Land relationships; verify a deed/mouza record for transactions.
-    </p>
-   </footer>
   </div>
-  <script>
-   
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <p class="eyebrow">Fig 0. Local · Offline-capable</p>
+    <h1>Scalar Studio</h1>
+    <p class="lede">
+      A broad, private scalar-quantity converter and scientific calculator covering SI,
+      metric, US customary, imperial, Bangladesh land measurements, engineering, electronics,
+      physics, chemistry and everyday units. Everything runs locally in this browser.
+    </p>
+  </section>
+
+  <nav class="mode-tabs" role="tablist" aria-label="Mode">
+    <button id="mConverter" class="tab" role="tab" aria-selected="true">Converter</button>
+    <button id="mCalculator" class="tab" role="tab" aria-selected="false">Calculator</button>
+  </nav>
+
+  <!-- ==================== CONVERTER ==================== -->
+  <section id="converterMode" role="tabpanel" aria-labelledby="mConverter">
+    <div class="layout">
+
+      <aside class="card side">
+        <p class="eyebrow">Fig 1. Quantity</p>
+        <div class="sp row" style="margin-bottom:.65rem;">
+          <h3>Categories</h3>
+          <span class="tag" id="unitCount">0 units</span>
+        </div>
+        <label class="search-wrap" aria-label="Search quantity">
+          <span class="prompt" aria-hidden="true">&gt;</span>
+          <input id="catSearch" autocomplete="off" placeholder="Search quantity…" spellcheck="false" type="text" aria-label="Search quantity"/>
+          <kbd aria-hidden="true">/</kbd>
+        </label>
+        <div class="cat-list" id="catList"></div>
+      </aside>
+
+      <main>
+        <section class="card">
+          <p class="eyebrow">Fig 2. Conversion</p>
+          <div class="sp row">
+            <div>
+              <h2 id="catTitle">Length</h2>
+              <p class="note" id="catNote"></p>
+            </div>
+            <div class="row">
+              <button class="btn ghost sm" id="copyResult">Copy result</button>
+              <button class="btn ghost sm" id="resetConverter">Reset</button>
+            </div>
+          </div>
+
+          <div class="g2" style="margin-top:.85rem;">
+            <div class="fg">
+              <label for="amount">Value</label>
+              <input id="amount" inputmode="decimal" step="any" type="number" value="1"/>
+            </div>
+            <div class="fg">
+              <label for="precision">Precision</label>
+              <select id="precision">
+                <option value="2">2 significant digits</option>
+                <option value="4">4 significant digits</option>
+                <option selected value="6">6 significant digits</option>
+                <option value="8">8 significant digits</option>
+                <option value="12">12 significant digits</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="g2" style="margin-top:.65rem;">
+            <div class="fg">
+              <label for="fromUnit">From</label>
+              <select id="fromUnit"></select>
+            </div>
+            <div class="fg">
+              <label for="toUnit">To</label>
+              <select id="toUnit"></select>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top:.65rem;">
+            <button class="btn ghost sm" id="swapUnits">⇄ Swap</button>
+            <button class="btn accent" id="convertBtn">Convert</button>
+            <button class="btn secondary" id="allUnits">Convert to all units</button>
+          </div>
+
+          <div class="result-box" id="resultBox">
+            <div class="result-main">
+              <div>
+                <div class="result-value" id="resultValue">1</div>
+                <div class="result-unit" id="resultUnit">meter (m)</div>
+              </div>
+              <div class="status" id="resultStatus">Exact factor conversion</div>
+            </div>
+            <div class="formula" id="formula"></div>
+          </div>
+
+          <div class="basis hidden" id="basis"></div>
+
+          <div class="table-controls hidden" id="tableControls">
+            <label class="search-wrap" aria-label="Filter units">
+              <span class="prompt" aria-hidden="true">&gt;</span>
+              <input id="tableFilter" type="text" placeholder="Filter units…" aria-label="Filter units" spellcheck="false"/>
+            </label>
+          </div>
+
+          <div class="table-wrap hidden" id="tableWrap">
+            <table class="conv-table">
+              <thead>
+                <tr>
+                  <th>Unit</th>
+                  <th>Value</th>
+                  <th>Symbol / note</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="allTable"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="card">
+          <p class="eyebrow">Fig 3. Quick calculators</p>
+          <div class="sp row">
+            <h2>Quick calculators</h2>
+            <span class="tag">local only</span>
+          </div>
+          <div class="quick">
+            <div class="tool">
+              <b>Percentage</b>
+              <p>Find x% of a number.</p>
+              <div class="row">
+                <input id="pctBase" step="any" type="number" value="100" aria-label="Base"/>
+                <input id="pctRate" step="any" type="number" value="15" aria-label="Rate"/>
+              </div>
+              <p id="pctOut">15% of 100 = 15</p>
+            </div>
+            <div class="tool">
+              <b>Area from dimensions</b>
+              <p>Length × width, with unit conversion.</p>
+              <div class="row">
+                <input id="lenA" step="any" type="number" value="10" aria-label="Length"/>
+                <input id="lenB" step="any" type="number" value="20" aria-label="Width"/>
+              </div>
+              <p id="areaOut">10 × 20 = 200 m²</p>
+            </div>
+            <div class="tool">
+              <b>Speed / distance / time</b>
+              <p>Choose two values and derive the third.</p>
+              <select id="sdMode" style="margin-top:.5rem;">
+                <option value="speed">Speed = distance ÷ time</option>
+                <option value="distance">Distance = speed × time</option>
+                <option value="time">Time = distance ÷ speed</option>
+              </select>
+              <p id="sdOut">Enter values in the calculator section.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <p class="eyebrow">Fig 4. Coverage</p>
+          <div class="sp row">
+            <div>
+              <h2>Coverage</h2>
+              <p class="note">
+                Designed around SI base/derived quantities plus widely used international and
+                regional units. SI itself is based on seven defining constants and has an
+                extensive family of derived units.
+              </p>
+            </div>
+          </div>
+          <div class="coverage-grid" id="coverageCards"></div>
+        </section>
+      </main>
+    </div>
+  </section>
+
+  <!-- ==================== CALCULATOR ==================== -->
+  <section id="calculatorMode" class="hidden" role="tabpanel" aria-labelledby="mCalculator">
+    <section class="card">
+      <p class="eyebrow">Fig 5. Scientific calculator</p>
+      <div class="calc-shell">
+        <div>
+          <div class="display">
+            <div class="expr" id="calcExpr">0</div>
+            <div class="answer" id="calcAnswer">0</div>
+            <div class="calc-meta">
+              <span id="angleModeLabel">Angle: DEG</span>
+              <span>Safe parser · no eval()</span>
+            </div>
+          </div>
+          <div class="row" style="margin-top:.55rem;">
+            <button class="btn ghost sm" id="angleToggle">DEG</button>
+            <button class="btn ghost sm" id="backspace">⌫</button>
+            <button class="btn ghost sm" id="clearCalc">C</button>
+            <button class="btn ghost sm" id="memoryCopy">Copy answer</button>
+          </div>
+          <div class="keys" id="calcKeys"></div>
+        </div>
+        <aside>
+          <div class="sp row">
+            <h3>History</h3>
+            <button class="btn ghost sm" id="clearHistory">Clear</button>
+          </div>
+          <div class="history" id="history" style="margin-top:.5rem;"></div>
+          <p class="sub">Constants</p>
+          <div class="constants" id="constants"></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="card">
+      <p class="eyebrow">Fig 6. Functions</p>
+      <h2>Built-in calculator functions</h2>
+      <div class="coverage-grid" style="margin-top:.85rem;">
+        <div class="tool-box">
+          <b>Arithmetic</b>
+          <p class="note">+, −, ×, ÷, powers (^), %, parentheses, unary minus.</p>
+        </div>
+        <div class="tool-box">
+          <b>Scientific</b>
+          <p class="note">sin, cos, tan, asin, acos, atan, sqrt, cbrt, ln, log, exp, abs, floor, ceil, round.</p>
+        </div>
+        <div class="tool-box">
+          <b>Constants</b>
+          <p class="note">π, e, c, g, G, h, kB, NA and more. Toggle DEG/RAD for trigonometry.</p>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <footer>
+    <div class="footer-row">
+      <p style="margin:0;">
+        <b style="color:var(--fg);">Aznur Scalar Studio</b>
+        · Browser-local calculations · No external JavaScript libraries · No uploads.
+      </p>
+      <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;">
+        <label class="eyebrow" for="theme2" style="margin:0;">Theme</label>
+        <select id="theme2" aria-label="Theme" style="min-width:104px;min-height:30px;font-size:12px;">
+          <option value="system">System</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+        <button class="btn ghost sm" id="copyDiag">Copy diagnostics</button>
+      </div>
+    </div>
+    <div class="footer-row" style="margin-bottom:0;">
+      <div class="footer-hints">
+        <span><kbd>/</kbd> filter categories</span>
+        <span><kbd>Ctrl/⌘+K</kbd> focus filter</span>
+        <span><kbd>Esc</kbd> clear / close</span>
+      </div>
+      <p style="margin:0;">
+        Regional land measures can differ by local convention. The Bangladesh defaults follow
+        the commonly published Ministry of Land relationships; verify a deed/mouza record for
+        transactions.
+      </p>
+    </div>
+  </footer>
+
+</main>
+
+<script>
 (() => {
-    "use strict";
-    const STORAGE = Object.freeze({ prefs: "aznur-scalar-prefs-v1",
-    history: "aznur-scalar-history-v1" });
-    const state = { category: "length", angle: "DEG", lastResult: 0, lastText: "0", history: [] };
-    const $ = id => document.getElementById(id);
-    const els = { mConverter: $('mConverter'), mCalculator: $('mCalculator'),
-    converterMode: $('converterMode'), calculatorMode: $('calculatorMode'), catSearch:
-    $('catSearch'), catList: $('catList'), unitCount: $('unitCount'), catTitle: $('catTitle'),
-    catNote: $('catNote'), amount: $('amount'), precision: $('precision'), fromUnit:
-    $('fromUnit'), toUnit: $('toUnit'), resultValue: $('resultValue'), resultUnit:
-    $('resultUnit'), formula: $('formula'), basis: $('basis'), tableWrap: $('tableWrap'),
-    allTable: $('allTable'), resultStatus: $('resultStatus'), copyResult: $('copyResult'),
-    resetConverter: $('resetConverter'), swapUnits: $('swapUnits'), convertBtn: $('convertBtn'),
-    allUnits: $('allUnits'), coverageCards: $('coverageCards'), pctBase: $('pctBase'), pctRate:
-    $('pctRate'), pctOut: $('pctOut'), lenA: $('lenA'), lenB: $('lenB'), areaOut: $('areaOut'),
-    sdMode: $('sdMode'), sdOut: $('sdOut'), calcExpr: $('calcExpr'), calcAnswer:
-    $('calcAnswer'), angleModeLabel: $('angleModeLabel'), angleToggle: $('angleToggle'),
-    backspace: $('backspace'), clearCalc: $('clearCalc'), memoryCopy: $('memoryCopy'), calcKeys:
-    $('calcKeys'), history: $('history'), clearHistory: $('clearHistory'), constants:
-    $('constants'), toasts: $('toasts') };
-    function notify(message, type = "ok") { const t = document.createElement("div");
-    t.className = `toast ${type}`; t.textContent = message; els.toasts.appendChild(t);
-    setTimeout(() => t.remove(), 3500); }
-    function format(value, sig = null) { if (!Number.isFinite(value))
-        return "—"; const s = sig || Number(els.precision.value) || 6; if (value === 0)
-        return "0"; const abs = Math.abs(value); if (abs >= 1e12 || abs < 1e-9)
-        return value.toExponential(Math.max(0, Math.min(12, s - 1)));
-        return Number(value.toPrecision(s)).toLocaleString(undefined,
-        { maximumFractionDigits: Math.max(0, Math.min(14, s + 2)) }); }
-    function esc(s) { return String(s); }
-    function copyText(text) { if (navigator.clipboard?.writeText)
-        return navigator.clipboard.writeText(text);
-        const ta = document.createElement("textarea"); ta.value = text;
-        document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove();
-        return Promise.resolve(); }
-    function savePrefs() { try {
-        localStorage.setItem(STORAGE.prefs, JSON.stringify({ category: state.category,
-        precision: els.precision.value, amount: els.amount.value, from: els.fromUnit.value, to:
-        els.toUnit.value }));
+  "use strict";
+
+  const STORAGE = Object.freeze({
+    prefs:   "aznur-scalar-prefs-v1",
+    history: "aznur-scalar-history-v1",
+    theme:   "aznur-index-theme",
+    recent:  "aznur-scalar-recent-v1",
+  });
+
+  const state = {
+    category: "length",
+    angle: "DEG",
+    lastResult: 0,
+    lastText: "0",
+    history: [],
+    recent: [],
+    allRows: [],
+    tableFilter: "",
+    mode: "converter",
+  };
+
+  const $ = id => document.getElementById(id);
+
+  const els = {
+    mConverter: $('mConverter'), mCalculator: $('mCalculator'),
+    converterMode: $('converterMode'), calculatorMode: $('calculatorMode'),
+    catSearch: $('catSearch'), catList: $('catList'), unitCount: $('unitCount'),
+    catTitle: $('catTitle'), catNote: $('catNote'),
+    amount: $('amount'), precision: $('precision'),
+    fromUnit: $('fromUnit'), toUnit: $('toUnit'),
+    resultValue: $('resultValue'), resultUnit: $('resultUnit'),
+    formula: $('formula'), basis: $('basis'), tableWrap: $('tableWrap'),
+    allTable: $('allTable'), resultStatus: $('resultStatus'),
+    copyResult: $('copyResult'), resetConverter: $('resetConverter'),
+    swapUnits: $('swapUnits'), convertBtn: $('convertBtn'), allUnits: $('allUnits'),
+    tableControls: $('tableControls'), tableFilter: $('tableFilter'),
+    coverageCards: $('coverageCards'),
+    pctBase: $('pctBase'), pctRate: $('pctRate'), pctOut: $('pctOut'),
+    lenA: $('lenA'), lenB: $('lenB'), areaOut: $('areaOut'),
+    sdMode: $('sdMode'), sdOut: $('sdOut'),
+    calcExpr: $('calcExpr'), calcAnswer: $('calcAnswer'),
+    angleModeLabel: $('angleModeLabel'), angleToggle: $('angleToggle'),
+    backspace: $('backspace'), clearCalc: $('clearCalc'), memoryCopy: $('memoryCopy'),
+    calcKeys: $('calcKeys'), history: $('history'), clearHistory: $('clearHistory'),
+    constants: $('constants'), toasts: $('toasts'),
+    copyDiag: $('copyDiag'),
+  };
+
+  /* ------------------------------------------------------------
+     Theme
+     ------------------------------------------------------------ */
+  function applyTheme(value) {
+    if (value === 'system') document.documentElement.removeAttribute('data-theme');
+    else document.documentElement.setAttribute('data-theme', value);
+    try { localStorage.setItem(STORAGE.theme, value); } catch {}
+    ['theme1', 'theme2'].forEach(id => { const el = $(id); if (el) el.value = value; });
+  }
+  function initTheme() {
+    let stored = 'system';
+    try { stored = localStorage.getItem(STORAGE.theme) || 'system'; } catch {}
+    applyTheme(stored);
+    ['theme1', 'theme2'].forEach(id => {
+      const el = $(id); if (el) el.addEventListener('change', () => applyTheme(el.value));
+    });
+  }
+
+  /* ------------------------------------------------------------
+     Toasts (with terminal markers)
+     ------------------------------------------------------------ */
+  function notify(message, type = "ok") {
+    const t = document.createElement("div");
+    t.className = `toast ${type}`;
+    const mark = document.createElement("span");
+    mark.className = "toast-mark";
+    mark.textContent = type === "err" ? "[x]" : type === "warn" ? "[!]" : "[*]";
+    const body = document.createElement("span");
+    body.textContent = message;
+    t.append(mark, body);
+    els.toasts.appendChild(t);
+    setTimeout(() => t.remove(), 3500);
+  }
+
+  /* ------------------------------------------------------------
+     Utils
+     ------------------------------------------------------------ */
+  function format(value, sig = null) {
+    if (!Number.isFinite(value)) return "—";
+    const s = sig || Number(els.precision.value) || 6;
+    if (value === 0) return "0";
+    const abs = Math.abs(value);
+    if (abs >= 1e12 || abs < 1e-9) return value.toExponential(Math.max(0, Math.min(12, s - 1)));
+    return Number(value.toPrecision(s)).toLocaleString(undefined,
+      { maximumFractionDigits: Math.max(0, Math.min(14, s + 2)) });
+  }
+  function esc(s) { return String(s); }
+  function copyText(text) {
+    if (navigator.clipboard?.writeText) return navigator.clipboard.writeText(text);
+    const ta = document.createElement("textarea");
+    ta.value = text; document.body.appendChild(ta);
+    ta.select(); document.execCommand("copy"); ta.remove();
+    return Promise.resolve();
+  }
+
+  function savePrefs() {
+    try {
+      localStorage.setItem(STORAGE.prefs, JSON.stringify({
+        category: state.category, precision: els.precision.value,
+        amount: els.amount.value,
+        from: els.fromUnit.value, to: els.toUnit.value,
+      }));
+    } catch {}
+  }
+  function loadPrefs() {
+    try { return JSON.parse(localStorage.getItem(STORAGE.prefs) || "{}") || {}; }
+    catch { return {}; }
+  }
+
+  function pushRecent(id) {
+    state.recent = [id, ...state.recent.filter(x => x !== id)].slice(0, 4);
+    try { localStorage.setItem(STORAGE.recent, JSON.stringify(state.recent)); } catch {}
+  }
+  function loadRecent() {
+    try {
+      const v = JSON.parse(localStorage.getItem(STORAGE.recent) || "[]");
+      state.recent = Array.isArray(v) ? v.slice(0, 4) : [];
+    } catch { state.recent = []; }
+  }
+
+  function pushHistory(expr, result) {
+    state.history.unshift({ expr, result });
+    state.history = state.history.slice(0, 30);
+    try { localStorage.setItem(STORAGE.history, JSON.stringify(state.history)); } catch {}
+    renderHistory();
+  }
+  function loadHistory() {
+    try {
+      const v = JSON.parse(localStorage.getItem(STORAGE.history) || "[]");
+      state.history = Array.isArray(v) ? v.slice(0, 30) : [];
+    } catch { state.history = []; }
+    renderHistory();
+  }
+
+  /* ------------------------------------------------------------
+     Unit tables
+     ------------------------------------------------------------ */
+  function u(name, symbol, toBase, aliases = []) { return { name, symbol, toBase: v => v * toBase, aliases }; }
+  function affine(name, symbol, toBase, offset, scaleFromUnitToBase, aliases = []) {
+    return { name, symbol, offset, scaleFromUnitToBase, affine: true, aliases, toBase: (v) => ((v + offset) * scaleFromUnitToBase) };
+  }
+
+  const U = {
+    length: { label: "Length", note: "Distance and linear dimensions.", base: "meter", units: [
+      u("meter", "m", 1, ["metre"]), u("kilometer", "km", 1000, ["kilometre", "kilometers"]),
+      u("centimeter", "cm", 0.01, ["centimetre"]), u("millimeter", "mm", 0.001, ["millimetre"]),
+      u("micrometer", "µm", 1e-6, ["micron"]), u("nanometer", "nm", 1e-9),
+      u("picometer", "pm", 1e-12), u("angstrom", "Å", 1e-10), u("decimeter", "dm", 0.1),
+      u("inch", "in", 0.0254, ["inches"]), u("foot", "ft", 0.3048, ["feet"]),
+      u("yard", "yd", 0.9144), u("mile", "mi", 1609.344), u("nautical mile", "nmi", 1852),
+      u("furlong", "fur", 201.168), u("chain", "ch", 20.1168),
+      u("rod / pole / perch", "rd", 5.0292), u("link", "li", 0.201168),
+      u("point (typographic, TeX)", "pt", 0.0003514598035),
+      u("point (PostScript)", "pt", 0.0003527777778),
+      u("pica", "pc", 0.004233333333), u("astronomical unit", "au", 149597870700),
+      u("light-year", "ly", 9460730472580800), u("parsec", "pc", 3.085677581491367e16),
+    ] },
+    area: { label: "Area", note: "Surface area, including international and land-measurement units.", base: "square meter", units: [
+      u("square meter", "m²", 1), u("square kilometer", "km²", 1e6),
+      u("square centimeter", "cm²", 1e-4), u("square millimeter", "mm²", 1e-6),
+      u("square micrometer", "µm²", 1e-12), u("hectare", "ha", 10000),
+      u("square inch", "in²", 0.00064516), u("square foot", "ft²", 0.09290304),
+      u("square yard", "yd²", 0.83612736), u("square mile", "mi²", 2589988.110336),
+      u("acre", "acre", 4046.8564224), u("rood", "rood", 1011.7141056),
+      u("square rod / perch", "rd²", 25.29285264), u("square chain", "ch²", 404.68564224),
+      u("square link", "li²", 0.040468564224),
+      u("Bangladesh decimal / shotangsho", "decimal / শতক", 40.468564224, ["shotok", "shotangsho", "শতাংশ", "শতক"]),
+      u("Bangladesh katha", "katha / কাঠা", 66.8902224, ["cottah", "kattah"]),
+      u("Bangladesh bigha", "bigha / বিঘা", 1337.804448, ["বিঘা"]),
+      u("Bangladesh kani", "kani / কানি", 1605.41356992, ["কানি"]),
+      u("Bangladesh gonda", "gonda / গণ্ডা", 864 * 0.09290304, ["গণ্ডা"]),
+      u("Bangladesh kora", "kora / কড়া", 216 * 0.09290304, ["কড়া"]),
+      u("Bangladesh kranti / kontho", "kranti / ক্রান্তি", 72 * 0.09290304, ["kontho", "ক্রান্তি"]),
+      u("Bangladesh til", "til / তিল", 3.6 * 0.09290304, ["তিল"]),
+      u("Bangladesh chatak", "chatak / ছটাক", 45 * 0.09290304, ["ছটাক"]),
+      u("Bangladesh ojutangsho", "ojutangsho / অযুতাংশ", 0.40468564224, ["অযুতাংশ"]),
+      u("square gaz / gaj", "gaz²", 0.83612736), u("square hat", "hat²", 0.40468564224),
+    ] },
+    volume: { label: "Volume", note: "Liquids, cubic measures, cooking and industrial volume units.", base: "liter", units: [
+      u("liter", "L", 1), u("milliliter", "mL", 0.001), u("cubic meter", "m³", 1000),
+      u("cubic centimeter", "cm³", 0.001), u("cubic millimeter", "mm³", 1e-6),
+      u("cubic inch", "in³", 0.016387064), u("cubic foot", "ft³", 28.316846592),
+      u("cubic yard", "yd³", 764.554857984), u("cubic mile", "mi³", 4.16818182544058e12),
+      u("US gallon", "US gal", 3.785411784), u("US quart", "US qt", 0.946352946),
+      u("US pint", "US pt", 0.473176473), u("US cup", "US cup", 0.2365882365),
+      u("US fluid ounce", "US fl oz", 0.0295735295625), u("US tablespoon", "US tbsp", 0.01478676478125),
+      u("US teaspoon", "US tsp", 0.00492892159375), u("Imperial gallon", "imp gal", 4.54609),
+      u("Imperial quart", "imp qt", 1.1365225), u("Imperial pint", "imp pt", 0.56826125),
+      u("Imperial fluid ounce", "imp fl oz", 0.0284130625),
+      u("Imperial tablespoon", "imp tbsp", 0.0177581640625),
+      u("Imperial teaspoon", "imp tsp", 0.00591938802083),
+      u("barrel (oil)", "bbl", 158.987294928), u("acre-foot", "acre-ft", 1233481.83754752),
+      u("deciliter", "dL", 0.1), u("centiliter", "cL", 0.01),
+      u("microliter", "µL", 1e-6), u("nanoliter", "nL", 1e-9),
+    ] },
+    mass: { label: "Mass", note: "Metric, avoirdupois, troy and South Asian units.", base: "kilogram", units: [
+      u("kilogram", "kg", 1), u("gram", "g", 0.001), u("milligram", "mg", 1e-6),
+      u("microgram", "µg", 1e-9), u("nanogram", "ng", 1e-12),
+      u("metric tonne", "t", 1000, ["tonne"]), u("quintal", "q", 100), u("kilotonne", "kt", 1e6),
+      u("pound", "lb", 0.45359237), u("ounce (avoirdupois)", "oz", 0.028349523125),
+      u("stone", "st", 6.35029318), u("hundredweight (US)", "cwt", 45.359237),
+      u("hundredweight (UK)", "cwt", 50.80234544), u("short ton (US)", "ton", 907.18474),
+      u("long ton (UK)", "long ton", 1016.0469088), u("grain", "gr", 0.00006479891),
+      u("carat", "ct", 0.0002), u("dalton / atomic mass unit", "Da", 1.66053906660e-27, ["u"]),
+      u("troy ounce", "ozt", 0.0311034768), u("troy pound", "lb t", 0.3732417216),
+      u("slug", "slug", 14.59390294),
+      u("tola / bhori", "tola / ভরি", 0.0116638125, ["bhori", "ভরি", "তোলা"]),
+      u("masha", "masha", 0.000972, ["মাশা"]), u("ratti", "ratti", 0.0001215, ["রতি"]),
+    ] },
+    time: { label: "Time", note: "Exact SI time units plus conventional calendar-independent durations.", base: "second", units: [
+      u("second", "s", 1), u("millisecond", "ms", 1e-3), u("microsecond", "µs", 1e-6),
+      u("nanosecond", "ns", 1e-9), u("picosecond", "ps", 1e-12), u("minute", "min", 60),
+      u("hour", "h", 3600), u("day", "d", 86400), u("week", "wk", 604800),
+      u("fortnight", "fortnight", 1209600), u("Julian year", "a", 31557600),
+      u("decade", "decade", 315576000), u("century", "century", 3155760000),
+    ] },
+    temperature: { label: "Temperature", note: "Temperature scales use affine/nonlinear conversion rather than a simple multiplier.", base: "kelvin", units: [
+      { name: "kelvin", symbol: "K", toBase: v => v, fromBase: v => v },
+      { name: "Celsius", symbol: "°C", toBase: v => v + 273.15, fromBase: v => v - 273.15 },
+      { name: "Fahrenheit", symbol: "°F", toBase: v => (v - 32) * 5 / 9 + 273.15, fromBase: v => (v - 273.15) * 9 / 5 + 32 },
+      { name: "Rankine", symbol: "°R", toBase: v => v * 5 / 9, fromBase: v => v * 9 / 5 },
+      { name: "Réaumur", symbol: "°Ré", toBase: v => v * 1.25 + 273.15, fromBase: v => (v - 273.15) * 0.8 },
+      { name: "Rømer", symbol: "°Rø", toBase: v => (v - 7.5) * 40 / 21 + 273.15, fromBase: v => (v - 273.15) * 21 / 40 + 7.5 },
+      { name: "Delisle", symbol: "°De", toBase: v => 273.15 - v * 2 / 3, fromBase: v => (273.15 - v) * 1.5 },
+      { name: "Newton", symbol: "°N", toBase: v => v * 100 / 33 + 273.15, fromBase: v => (v - 273.15) * 33 / 100 },
+    ] },
+    angle: { label: "Plane Angle", note: "Dimensionless SI angle units and common geometric conventions.", base: "radian", units: [
+      u("radian", "rad", 1), u("degree", "°", Math.PI / 180), u("gradian", "gon", Math.PI / 200),
+      u("arcminute", "′", Math.PI / 10800), u("arcsecond", "″", Math.PI / 648000),
+      u("milliradian", "mrad", 1e-3), u("micro-radian", "µrad", 1e-6),
+      u("turn / revolution", "turn", 2 * Math.PI), u("quadrant", "quadrant", Math.PI / 2),
+      u("sextant", "sextant", Math.PI / 3), u("octant", "octant", Math.PI / 4),
+    ] },
+    solidangle: { label: "Solid Angle", note: "Three-dimensional angular measure.", base: "steradian", units: [
+      u("steradian", "sr", 1), u("square degree", "deg²", (Math.PI / 180) ** 2),
+      u("square arcminute", "arcmin²", (Math.PI / 10800) ** 2),
+      u("square arcsecond", "arcsec²", (Math.PI / 648000) ** 2),
+    ] },
+    speed: { label: "Speed", note: "Linear speed and navigation units.", base: "meter per second", units: [
+      u("meter per second", "m/s", 1), u("kilometer per hour", "km/h", 1 / 3.6),
+      u("mile per hour", "mph", 0.44704), u("foot per second", "ft/s", 0.3048),
+      u("knot", "kn", 0.5144444444444445), u("Mach (standard sea level)", "Ma", 340.3),
+      u("speed of light", "c", 299792458),
+    ] },
+    acceleration: { label: "Acceleration", note: "Change in velocity per time.", base: "meter per second squared", units: [
+      u("meter per second²", "m/s²", 1), u("gal", "Gal", 0.01),
+      u("standard gravity", "g₀", 9.80665), u("foot per second²", "ft/s²", 0.3048),
+      u("inch per second²", "in/s²", 0.0254),
+    ] },
+    jerk: { label: "Jerk", note: "Rate of change of acceleration.", base: "meter per second cubed", units: [
+      u("meter per second³", "m/s³", 1), u("foot per second³", "ft/s³", 0.3048),
+      u("standard gravity per second", "g/s", 9.80665),
+    ] },
+    force: { label: "Force", note: "Mechanical force units.", base: "newton", units: [
+      u("newton", "N", 1), u("kilonewton", "kN", 1000), u("meganewton", "MN", 1e6),
+      u("dyne", "dyn", 1e-5), u("kilogram-force", "kgf", 9.80665),
+      u("gram-force", "gf", 0.00980665), u("pound-force", "lbf", 4.4482216152605),
+      u("ounce-force", "ozf", 0.27801385095378125), u("poundal", "pdl", 0.138254954376),
+    ] },
+    pressure: { label: "Pressure / Stress", note: "Pressure and stress share force-per-area dimensions.", base: "pascal", units: [
+      u("pascal", "Pa", 1), u("kilopascal", "kPa", 1000), u("megapascal", "MPa", 1e6),
+      u("gigapascal", "GPa", 1e9), u("bar", "bar", 1e5), u("millibar", "mbar", 100),
+      u("standard atmosphere", "atm", 101325), u("technical atmosphere", "at", 98066.5),
+      u("torr", "Torr", 101325 / 760), u("mmHg", "mmHg", 133.322387415),
+      u("psi", "psi", 6894.757293168), u("ksi", "ksi", 6894757.293168),
+      u("psf", "psf", 47.88025898033584), u("kgf/cm²", "kgf/cm²", 98066.5),
+      u("kgf/m²", "kgf/m²", 9.80665), u("inHg (0 °C)", "inHg", 3386.388640341),
+    ] },
+    energy: { label: "Energy / Work / Heat", note: "Mechanical, thermal and electrical energy units.", base: "joule", units: [
+      u("joule", "J", 1), u("kilojoule", "kJ", 1000), u("megajoule", "MJ", 1e6),
+      u("calorie (thermochemical)", "cal", 4.184), u("kilocalorie", "kcal", 4184),
+      u("watt-hour", "Wh", 3600), u("kilowatt-hour", "kWh", 3.6e6),
+      u("megawatt-hour", "MWh", 3.6e9), u("BTU (IT)", "BTU", 1055.05585262),
+      u("therm", "thm", 105505585.262), u("electronvolt", "eV", 1.602176634e-19),
+      u("kiloelectronvolt", "keV", 1.602176634e-16), u("megaelectronvolt", "MeV", 1.602176634e-13),
+      u("erg", "erg", 1e-7), u("foot-pound force", "ft·lbf", 1.3558179483314004),
+      u("foot-poundal", "ft·pdl", 0.0421401100938048),
+    ] },
+    power: { label: "Power", note: "Rate of energy transfer and common horsepower variants.", base: "watt", units: [
+      u("watt", "W", 1), u("kilowatt", "kW", 1000), u("megawatt", "MW", 1e6),
+      u("gigawatt", "GW", 1e9), u("milliwatt", "mW", 1e-3), u("erg per second", "erg/s", 1e-7),
+      u("foot-pound-force per second", "ft·lbf/s", 1.3558179483314004),
+      u("foot-pound-force per minute", "ft·lbf/min", 1.3558179483314004 / 60),
+      u("foot-pound-force per hour", "ft·lbf/h", 1.3558179483314004 / 3600),
+      u("horsepower (mechanical)", "hp", 745.6998715822702),
+      u("horsepower (metric)", "PS", 735.49875),
+      u("horsepower (UK)", "hp(UK)", 745.6998715822702),
+      u("electrical horsepower", "hp(E)", 746),
+      u("boiler horsepower", "bhp", 9810.0),
+    ] },
+    torque: { label: "Torque", note: "Moment of force.", base: "newton meter", units: [
+      u("newton meter", "N·m", 1), u("kilonewton meter", "kN·m", 1000),
+      u("dyne centimeter", "dyn·cm", 1e-7), u("kilogram-force meter", "kgf·m", 9.80665),
+      u("pound-force foot", "lbf·ft", 1.3558179483314004),
+      u("pound-force inch", "lbf·in", 0.1129848290276167),
+    ] },
+    frequency: { label: "Frequency", note: "Cycles, revolutions and common radio/technical scales.", base: "hertz", units: [
+      u("hertz", "Hz", 1), u("kilohertz", "kHz", 1e3), u("megahertz", "MHz", 1e6),
+      u("gigahertz", "GHz", 1e9), u("terahertz", "THz", 1e12),
+      u("revolution per minute", "rpm", 1 / 60), u("revolution per second", "rps", 1),
+    ] },
+    flow: { label: "Volumetric Flow", note: "Volume transported per unit time.", base: "cubic meter per second", units: [
+      u("m³/s", "m³/s", 1), u("L/s", "L/s", 0.001), u("L/min", "L/min", 0.001 / 60),
+      u("mL/s", "mL/s", 1e-6), u("US gallon per minute", "US gpm", 0.003785411784 / 60),
+      u("Imperial gallon per minute", "imp gpm", 0.00454609 / 60),
+      u("cubic foot per second", "ft³/s", 0.028316846592),
+      u("cubic foot per minute", "ft³/min", 0.028316846592 / 60),
+    ] },
+    massflow: { label: "Mass Flow", note: "Mass transported per unit time.", base: "kilogram per second", units: [
+      u("kilogram per second", "kg/s", 1), u("kilogram per hour", "kg/h", 1 / 3600),
+      u("gram per second", "g/s", 0.001), u("gram per minute", "g/min", 0.001 / 60),
+      u("pound per second", "lb/s", 0.45359237), u("pound per minute", "lb/min", 0.45359237 / 60),
+      u("pound per hour", "lb/h", 0.45359237 / 3600), u("tonne per hour", "t/h", 1000 / 3600),
+    ] },
+    density: { label: "Density", note: "Mass per unit volume.", base: "kilogram per cubic meter", units: [
+      u("kg/m³", "kg/m³", 1), u("g/cm³", "g/cm³", 1000), u("kg/L", "kg/L", 1000),
+      u("g/mL", "g/mL", 1000), u("kg/m³ (water approx 4 °C)", "kg/m³ water", 1000),
+      u("lb/ft³", "lb/ft³", 16.01846337396), u("lb/in³", "lb/in³", 27679.9047102),
+      u("lb/gal US", "lb/US gal", 119.8264273),
+    ] },
+    specificvolume: { label: "Specific Volume", note: "Volume per unit mass.", base: "cubic meter per kilogram", units: [
+      u("m³/kg", "m³/kg", 1), u("L/kg", "L/kg", 0.001), u("cm³/g", "cm³/g", 1e-6 / 0.001),
+      u("ft³/lb", "ft³/lb", 0.0624279606), u("gal US/lb", "US gal/lb", 0.00834540445),
+    ] },
+    viscdyn: { label: "Dynamic Viscosity", note: "Absolute/dynamic viscosity.", base: "pascal second", units: [
+      u("pascal second", "Pa·s", 1), u("millipascal second", "mPa·s", 1e-3),
+      u("poise", "P", 0.1), u("centipoise", "cP", 0.001), u("reyn", "reyn", 68947.57293168),
+    ] },
+    visckin: { label: "Kinematic Viscosity", note: "Dynamic viscosity divided by density.", base: "square meter per second", units: [
+      u("m²/s", "m²/s", 1), u("cm²/s", "cm²/s", 1e-4), u("stokes", "St", 1e-4),
+      u("centistokes", "cSt", 1e-6), u("ft²/s", "ft²/s", 0.09290304),
+    ] },
+    surface: { label: "Surface Tension", note: "Force per unit length.", base: "newton per meter", units: [
+      u("newton per meter", "N/m", 1), u("dyne per centimeter", "dyn/cm", 0.001),
+      u("millinewton per meter", "mN/m", 0.001), u("pound-force per foot", "lbf/ft", 14.59390294),
+      u("pound-force per inch", "lbf/in", 175.12683528),
+    ] },
+    heatcap: { label: "Heat Capacity", note: "Energy per temperature interval.", base: "joule per kelvin", units: [
+      u("joule per kelvin", "J/K", 1), u("kilojoule per kelvin", "kJ/K", 1000),
+      u("calorie per kelvin", "cal/K", 4.184), u("BTU per °F", "BTU/°F", 1899.100534716),
+    ] },
+    heatcond: { label: "Thermal Conductivity", note: "Heat conducted per area, time and temperature gradient.", base: "watt per meter kelvin", units: [
+      u("W/(m·K)", "W/m·K", 1), u("mW/(m·K)", "mW/m·K", 0.001),
+      u("BTU/(h·ft·°F)", "BTU/h·ft·°F", 1.730735),
+      u("cal/(s·cm·°C)", "cal/s·cm·°C", 418.4),
+    ] },
+    thermalres: { label: "Thermal Resistance", note: "Temperature difference per unit power.", base: "kelvin per watt", units: [
+      u("kelvin per watt", "K/W", 1), u("degree Celsius per watt", "°C/W", 1),
+      u("degree Fahrenheit per watt", "°F/W", 5 / 9),
+      u("degree Fahrenheit hour per BTU", "°F·h/BTU", 1 / 0.29307107),
+    ] },
+    current: { label: "Electric Current", note: "Charge flow per unit time.", base: "ampere", units: [
+      u("ampere", "A", 1), u("milliampere", "mA", 1e-3), u("microampere", "µA", 1e-6),
+      u("nanoampere", "nA", 1e-9), u("kiloampere", "kA", 1e3),
+    ] },
+    charge: { label: "Electric Charge", note: "Electric charge quantities.", base: "coulomb", units: [
+      u("coulomb", "C", 1), u("millicoulomb", "mC", 1e-3), u("microcoulomb", "µC", 1e-6),
+      u("nanocoulomb", "nC", 1e-9), u("ampere-hour", "Ah", 3600),
+      u("milliampere-hour", "mAh", 3.6),
+      u("faraday (elementary charge per mole)", "F", 96485.33212),
+    ] },
+    voltage: { label: "Voltage / Potential", note: "Electric potential difference.", base: "volt", units: [
+      u("volt", "V", 1), u("millivolt", "mV", 1e-3), u("microvolt", "µV", 1e-6),
+      u("kilovolt", "kV", 1e3), u("megavolt", "MV", 1e6),
+      u("statvolt", "statV", 299.792458), u("abvolt", "abV", 1e-8),
+    ] },
+    resistance: { label: "Electrical Resistance", note: "Ohmic resistance and engineering units.", base: "ohm", units: [
+      u("ohm", "Ω", 1), u("milliohm", "mΩ", 1e-3), u("microohm", "µΩ", 1e-6),
+      u("kilohm", "kΩ", 1e3), u("megohm", "MΩ", 1e6), u("abohm", "abΩ", 1e-9),
+    ] },
+    conductance: { label: "Electrical Conductance", note: "Reciprocal of resistance.", base: "siemens", units: [
+      u("siemens", "S", 1), u("millisiemens", "mS", 1e-3), u("microsiemens", "µS", 1e-6),
+      u("kilosiemens", "kS", 1e3), u("abmho", "abmho", 1e9),
+    ] },
+    capacitance: { label: "Capacitance", note: "Stored electric charge per potential.", base: "farad", units: [
+      u("farad", "F", 1), u("millifarad", "mF", 1e-3), u("microfarad", "µF", 1e-6),
+      u("nanofarad", "nF", 1e-9), u("picofarad", "pF", 1e-12),
+      u("abfarad", "abF", 1e9), u("statfarad", "statF", 1.1123470522803e-12),
+    ] },
+    inductance: { label: "Inductance", note: "Magnetic/electromagnetic inductance.", base: "henry", units: [
+      u("henry", "H", 1), u("millihenry", "mH", 1e-3), u("microhenry", "µH", 1e-6),
+      u("nanohenry", "nH", 1e-9), u("abhenry", "abH", 1e-9),
+      u("stathenry", "statH", 8.9875517923e11),
+    ] },
+    magflux: { label: "Magnetic Flux", note: "Magnetic flux in SI and CGS conventions.", base: "weber", units: [
+      u("weber", "Wb", 1), u("milliweber", "mWb", 1e-3), u("maxwell", "Mx", 1e-8),
+      u("volt second", "V·s", 1),
+    ] },
+    magdensity: { label: "Magnetic Flux Density", note: "Magnetic flux per unit area.", base: "tesla", units: [
+      u("tesla", "T", 1), u("millitesla", "mT", 1e-3), u("microtesla", "µT", 1e-6),
+      u("gauss", "G", 1e-4), u("kilogauss", "kG", 0.1),
+      u("maxwell per square centimeter", "Mx/cm²", 1e-4),
+    ] },
+    efield: { label: "Electric Field Strength", note: "Potential per distance.", base: "volt per meter", units: [
+      u("volt per meter", "V/m", 1), u("volt per centimeter", "V/cm", 100),
+      u("kilovolt per meter", "kV/m", 1000),
+      u("statvolt per centimeter", "statV/cm", 29979.2458),
+    ] },
+    info: { label: "Information", note: "Digital information units. Decimal prefixes use powers of 1000; IEC binary prefixes use powers of 1024.", base: "bit", units: [
+      u("bit", "bit", 1), u("byte", "B", 8),
+      u("kilobit (decimal)", "kbit", 1000), u("megabit (decimal)", "Mbit", 1e6),
+      u("gigabit (decimal)", "Gbit", 1e9), u("terabit (decimal)", "Tbit", 1e12),
+      u("petabit (decimal)", "Pbit", 1e15), u("kilobyte (decimal)", "kB", 8000),
+      u("megabyte (decimal)", "MB", 8e6), u("gigabyte (decimal)", "GB", 8e9),
+      u("terabyte (decimal)", "TB", 8e12), u("petabyte (decimal)", "PB", 8e15),
+      u("kibibit", "Kibit", 1024), u("mebibit", "Mibit", 1024 ** 2),
+      u("gibibit", "Gibit", 1024 ** 3), u("tebibit", "Tibit", 1024 ** 4),
+      u("kibibyte", "KiB", 8 * 1024), u("mebibyte", "MiB", 8 * 1024 ** 2),
+      u("gibibyte", "GiB", 8 * 1024 ** 3), u("tebibyte", "TiB", 8 * 1024 ** 4),
+      u("pebibyte", "PiB", 8 * 1024 ** 5),
+    ] },
+    datarate: { label: "Data Rate", note: "Transmission and storage throughput.", base: "bit per second", units: [
+      u("bit per second", "bit/s", 1), u("kilobit per second", "kbit/s", 1000),
+      u("megabit per second", "Mbit/s", 1e6), u("gigabit per second", "Gbit/s", 1e9),
+      u("terabit per second", "Tbit/s", 1e12), u("byte per second", "B/s", 8),
+      u("kilobyte per second", "kB/s", 8000), u("megabyte per second", "MB/s", 8e6),
+      u("gigabyte per second", "GB/s", 8e9),
+      u("kibibit per second", "Kibit/s", 1024), u("mebibit per second", "Mibit/s", 1024 ** 2),
+      u("gibibit per second", "Gibit/s", 1024 ** 3),
+    ] },
+    luminousintensity: { label: "Luminous Intensity", note: "Photometric base quantity.", base: "candela", units: [
+      u("candela", "cd", 1), u("millicandela", "mcd", 1e-3), u("kilocandela", "kcd", 1000),
+    ] },
+    luminousflux: { label: "Luminous Flux", note: "Visible-light power weighted by human photopic response.", base: "lumen", units: [
+      u("lumen", "lm", 1), u("kilolumen", "klm", 1000), u("megalumen", "Mlm", 1e6),
+    ] },
+    illuminance: { label: "Illuminance", note: "Luminous flux per unit area.", base: "lux", units: [
+      u("lux", "lx", 1), u("foot-candle", "fc", 10.76391041671), u("phot", "ph", 10000),
+      u("nox", "nx", 0.001),
+    ] },
+    luminance: { label: "Luminance", note: "Luminous intensity per projected area.", base: "candela per square meter", units: [
+      u("candela per square meter", "cd/m²", 1), u("nit", "nit", 1), u("stilb", "sb", 10000),
+      u("apostilb", "asb", 1 / Math.PI), u("lambert", "L", 3183.098861837907),
+    ] },
+    radioactivity: { label: "Radioactivity", note: "Activity of radioactive decay.", base: "becquerel", units: [
+      u("becquerel", "Bq", 1), u("kilobecquerel", "kBq", 1e3), u("megabecquerel", "MBq", 1e6),
+      u("gigabecquerel", "GBq", 1e9), u("curie", "Ci", 3.7e10), u("millicurie", "mCi", 3.7e7),
+      u("microcurie", "µCi", 3.7e4), u("nanocurie", "nCi", 37), u("rutherford", "Rd", 1e6),
+    ] },
+    dose: { label: "Absorbed Dose", note: "Ionizing radiation energy absorbed per mass.", base: "gray", units: [
+      u("gray", "Gy", 1), u("milligray", "mGy", 1e-3), u("microgray", "µGy", 1e-6),
+      u("rad", "rad", 0.01), u("kilogray", "kGy", 1000),
+    ] },
+    doseeq: { label: "Equivalent Dose", note: "Radiation dose equivalent/weighted dose.", base: "sievert", units: [
+      u("sievert", "Sv", 1), u("millisievert", "mSv", 1e-3), u("microsievert", "µSv", 1e-6),
+      u("rem", "rem", 0.01), u("millirem", "mrem", 1e-5),
+    ] },
+    catalytic: { label: "Catalytic Activity", note: "Catalyst amount-of-substance conversion rate.", base: "katal", units: [
+      u("katal", "kat", 1), u("mole per second", "mol/s", 1), u("nanokatal", "nkat", 1e-9),
+      u("microkatal", "µkat", 1e-6), u("enzyme unit", "U", 1e-6 / 60),
+    ] },
+    amount: { label: "Amount of Substance", note: "Chemical amount. One mole contains exactly the Avogadro constant number of entities.", base: "mole", units: [
+      u("mole", "mol", 1), u("millimole", "mmol", 1e-3), u("micromole", "µmol", 1e-6),
+      u("nanomole", "nmol", 1e-9), u("kilomole", "kmol", 1000),
+      u("entity count", "entities", 1 / 6.02214076e23),
+    ] },
+    molarity: { label: "Amount Concentration", note: "Molar concentration / amount concentration.", base: "mole per cubic meter", units: [
+      u("mol/m³", "mol/m³", 1), u("mol/L", "mol/L", 1000), u("mmol/L", "mmol/L", 1),
+      u("µmol/L", "µmol/L", 0.001), u("mol/cm³", "mol/cm³", 1e6),
+    ] },
+    molality: { label: "Molality", note: "Amount of solute per mass of solvent.", base: "mole per kilogram", units: [
+      u("mol/kg", "mol/kg", 1), u("mmol/kg", "mmol/kg", 1e-3), u("mol/g", "mol/g", 1000),
+    ] },
+    molarmass: { label: "Molar Mass", note: "Mass per amount of substance.", base: "kilogram per mole", units: [
+      u("kg/mol", "kg/mol", 1), u("g/mol", "g/mol", 1e-3), u("mg/mmol", "mg/mmol", 1e-3),
+      u("lb/mol", "lb/mol", 0.45359237),
+    ] },
+    wavenumber: { label: "Wavenumber", note: "Inverse wavelength.", base: "per meter", units: [
+      u("per meter", "m⁻¹", 1), u("per centimeter", "cm⁻¹", 100), u("diopter", "D", 1),
+    ] },
+    permeability: { label: "Permeability", note: "Porous-medium permeability in SI square metres and Darcy units.", base: "square meter", units: [
+      u("square meter", "m²", 1), u("darcy", "D", 9.869233e-13),
+      u("millidarcy", "mD", 9.869233e-16),
+    ] },
+    fuel: { label: "Fuel Economy", note: "Reciprocal-style fuel economy units are handled with their proper nonlinear conversion.", base: "kilometer per liter", units: [
+      { name: "kilometer per liter", symbol: "km/L", toBase: v => v, fromBase: v => v },
+      { name: "liter per 100 kilometer", symbol: "L/100 km", toBase: v => 100 / v, fromBase: v => 100 / v },
+      { name: "miles per US gallon", symbol: "mpg (US)", toBase: v => v * 0.4251437075, fromBase: v => v / 0.4251437075 },
+      { name: "miles per Imperial gallon", symbol: "mpg (Imp)", toBase: v => v * 0.354006189934, fromBase: v => v / 0.354006189934 },
+    ] },
+    concentration: { label: "Dimensionless Ratio / Concentration", note: "Ratios such as percent, parts per million and parts per billion are dimensionless quantities.", base: "one", units: [
+      u("one", "1", 1), u("percent", "%", 0.01), u("per mille", "‰", 0.001),
+      u("parts per million", "ppm", 1e-6), u("parts per billion", "ppb", 1e-9),
+      u("parts per trillion", "ppt", 1e-12), u("basis point", "bp", 1e-4),
+    ] },
+  };
+
+  const bdSqFt = 0.09290304;
+  const areaUnits = U.area.units;
+  const bdFactors = {
+    "Bangladesh decimal / shotangsho": 435.6 * bdSqFt,
+    "Bangladesh katha": 720 * bdSqFt,
+    "Bangladesh bigha": 14400 * bdSqFt,
+    "Bangladesh kani": 17280 * bdSqFt,
+    "Bangladesh gonda": 864 * bdSqFt,
+    "Bangladesh kora": 216 * bdSqFt,
+    "Bangladesh kranti / kontho": 72 * bdSqFt,
+    "Bangladesh til": 3.6 * bdSqFt,
+    "Bangladesh chatak": 45 * bdSqFt,
+    "Bangladesh ojutangsho": 4.356 * bdSqFt,
+    "square hat": 3 * 3 * bdSqFt,
+  };
+  areaUnits.forEach(x => { if (bdFactors[x.name]) x.toBase = v => v * bdFactors[x.name]; });
+
+  const GROUPS = [
+    ["Everyday", ["length", "area", "volume", "mass", "time", "temperature", "angle", "speed", "fuel"]],
+    ["Engineering", ["acceleration", "jerk", "force", "pressure", "energy", "power", "torque", "frequency", "flow", "massflow", "density", "specificvolume", "viscdyn", "visckin", "surface", "heatcap", "heatcond", "thermalres"]],
+    ["Electrical & magnetic", ["current", "charge", "voltage", "resistance", "conductance", "capacitance", "inductance", "magflux", "magdensity", "efield"]],
+    ["Computing", ["info", "datarate"]],
+    ["Light & radiation", ["luminousintensity", "luminousflux", "illuminance", "luminance", "radioactivity", "dose", "doseeq"]],
+    ["Chemistry & physics", ["solidangle", "catalytic", "amount", "molarity", "molality", "molarmass", "wavenumber", "permeability", "concentration"]],
+  ];
+
+  function unitSearchText(unit) { return `${unit.name} ${unit.symbol} ${(unit.aliases || []).join(" ")}`.toLowerCase(); }
+  function allUnits(cat) { return U[cat]?.units || []; }
+  function unitName(u) { return `${u.name} (${u.symbol})`; }
+  function getCat() { return U[state.category]; }
+
+  function convertValue(value, from, to) {
+    const units = allUnits(state.category);
+    const f = units[from], t = units[to];
+    if (!f || !t) throw new Error("Unknown unit");
+    const base = f.toBase(value);
+    if (typeof t.fromBase === "function") return t.fromBase(base);
+    const oneBase = t.toBase(1);
+    if (!Number.isFinite(oneBase) || oneBase === 0) throw new Error("Invalid destination unit");
+    return base / oneBase;
+  }
+  function toBaseValue(value, unit) { return unit.toBase(value); }
+
+  /* ------------------------------------------------------------
+     Category sidebar
+     ------------------------------------------------------------ */
+  function makeCatButton(id) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = `cat ${id === state.category ? "active" : ""}`;
+    const span = document.createElement("span");
+    span.textContent = U[id].label;
+    const small = document.createElement("small");
+    small.textContent = allUnits(id).length;
+    b.append(span, small);
+    b.onclick = () => selectCategory(id);
+    return b;
+  }
+
+  function populateCategories() {
+    const q = els.catSearch.value.trim().toLowerCase();
+    els.catList.replaceChildren();
+
+    if (!q && state.recent.length) {
+      const recentIds = state.recent.filter(id => U[id]);
+      if (recentIds.length) {
+        const g = document.createElement("div");
+        g.className = "group-title";
+        g.textContent = "Recent";
+        els.catList.appendChild(g);
+        recentIds.forEach(id => els.catList.appendChild(makeCatButton(id)));
+      }
     }
-    catch { } }
-    function loadPrefs() { try {
-        return JSON.parse(localStorage.getItem(STORAGE.prefs) || "{}") || {};
-    }
-    catch {
-        return {};
-    } }
-    function pushHistory(expr, result) { state.history.unshift({ expr, result });
-    state.history = state.history.slice(0, 30); try {
-        localStorage.setItem(STORAGE.history, JSON.stringify(state.history));
-    }
-    catch { } renderHistory(); }
-    function loadHistory() { try {
-        const v = JSON.parse(localStorage.getItem(STORAGE.history) || "[]");
-        state.history = Array.isArray(v) ? v.slice(0, 30) : [];
-    }
-    catch {
-        state.history = [];
-    } renderHistory(); }
-    function u(name, symbol, toBase, aliases = []) { return { name, symbol,
-    toBase: v => v * toBase, aliases }; }
-    function affine(name, symbol, toBase, offset, scaleFromUnitToBase,
-    aliases = []) { return { name, symbol, offset, scaleFromUnitToBase, affine: true, aliases,
-    toBase: (v) => ((v + offset) * scaleFromUnitToBase) }; }
-    const U = {
-        length: { label: "Length", note: "Distance and linear dimensions.", base: "meter", units: [
-                u("meter", "m", 1, ["metre"]), u("kilometer", "km", 1000, ["kilometre",
-                "kilometers"]), u("centimeter", "cm", 0.01, ["centimetre"]), u("millimeter",
-                "mm", 0.001, ["millimetre"]), u("micrometer", "µm", 1e-6,
-                ["micron"]), u("nanometer", "nm", 1e-9), u("picometer", "pm",
-                1e-12), u("angstrom", "Å", 1e-10), u("decimeter", "dm", 0.1), u("inch", "in",
-                0.0254, ["inches"]), u("foot", "ft", 0.3048, ["feet"]), u("yard", "yd",
-                0.9144), u("mile", "mi", 1609.344), u("nautical mile", "nmi",
-                1852), u("furlong", "fur", 201.168), u("chain", "ch",
-                20.1168), u("rod / pole / perch", "rd", 5.0292), u("link", "li",
-                0.201168), u("point (typographic, TeX)", "pt",
-                0.0003514598035), u("point (PostScript)", "pt", 0.0003527777778), u("pica",
-                "pc", 0.004233333333), u("astronomical unit", "au",
-                149597870700), u("light-year", "ly", 9460730472580800), u("parsec", "pc",
-                3.085677581491367e16)
-            ] },
-        area: { label: "Area",
-        note: "Surface area, including international and land-measurement units.", base:
-        "square meter", units: [
-                u("square meter", "m²", 1), u("square kilometer", "km²",
-                1e6), u("square centimeter", "cm²", 1e-4), u("square millimeter", "mm²",
-                1e-6), u("square micrometer", "µm²", 1e-12), u("hectare", "ha",
-                10000), u("square inch", "in²", 0.00064516), u("square foot", "ft²",
-                0.09290304), u("square yard", "yd²", 0.83612736), u("square mile", "mi²",
-                2589988.110336), u("acre", "acre", 4046.8564224), u("rood", "rood",
-                1011.7141056), u("square rod / perch", "rd²", 25.29285264), u("square chain",
-                "ch²", 404.68564224), u("square link", "li²", 0.040468564224),
-                u("Bangladesh decimal / shotangsho", "decimal / শতক", 40.468564224, ["shotok",
-                "shotangsho", "শতাংশ", "শতক"]), u("Bangladesh katha", "katha / কাঠা",
-                66.8902224, ["cottah", "kattah"]), u("Bangladesh bigha", "bigha / বিঘা",
-                1337.804448, ["বিঘা"]), u("Bangladesh kani", "kani / কানি", 1605.41356992,
-                ["কানি"]), u("Bangladesh gonda", "gonda / গণ্ডা", 864 * 0.09290304,
-                ["গণ্ডা"]), u("Bangladesh kora", "kora / কড়া", 216 * 0.09290304,
-                ["কড়া"]), u("Bangladesh kranti / kontho", "kranti / ক্রান্তি", 72 * 0.09290304,
-                ["kontho", "ক্রান্তি"]), u("Bangladesh til", "til / তিল", 3.6 * 0.09290304,
-                ["তিল"]), u("Bangladesh chatak", "chatak / ছটাক", 45 * 0.09290304,
-                ["ছটাক"]), u("Bangladesh ojutangsho", "ojutangsho / অযুতাংশ", 0.40468564224,
-                ["অযুতাংশ"]), u("square gaz / gaj", "gaz²", 0.83612736), u("square hat", "hat²",
-                0.40468564224)
-            ] },
-        volume: { label: "Volume",
-        note: "Liquids, cubic measures, cooking and industrial volume units.", base: "liter",
-        units: [
-                u("liter", "L", 1), u("milliliter", "mL", 0.001), u("cubic meter", "m³",
-                1000), u("cubic centimeter", "cm³", 0.001), u("cubic millimeter", "mm³",
-                1e-6), u("cubic inch", "in³", 0.016387064), u("cubic foot", "ft³",
-                28.316846592), u("cubic yard", "yd³", 764.554857984), u("cubic mile", "mi³",
-                4.16818182544058e12), u("US gallon", "US gal", 3.785411784), u("US quart",
-                "US qt", 0.946352946), u("US pint", "US pt", 0.473176473), u("US cup", "US cup",
-                0.2365882365), u("US fluid ounce", "US fl oz",
-                0.0295735295625), u("US tablespoon", "US tbsp",
-                0.01478676478125), u("US teaspoon", "US tsp",
-                0.00492892159375), u("Imperial gallon", "imp gal", 4.54609), u("Imperial quart",
-                "imp qt", 1.1365225), u("Imperial pint", "imp pt",
-                0.56826125), u("Imperial fluid ounce", "imp fl oz",
-                0.0284130625), u("Imperial tablespoon", "imp tbsp",
-                0.0177581640625), u("Imperial teaspoon", "imp tsp",
-                0.00591938802083), u("barrel (oil)", "bbl", 158.987294928), u("acre-foot",
-                "acre-ft", 1233481.83754752), u("deciliter", "dL", 0.1), u("centiliter", "cL",
-                0.01), u("microliter", "µL", 1e-6), u("nanoliter", "nL", 1e-9)
-            ] },
-        mass: { label: "Mass", note: "Metric, avoirdupois, troy and South Asian units.",
-        base: "kilogram", units: [
-                u("kilogram", "kg", 1), u("gram", "g", 0.001), u("milligram", "mg",
-                1e-6), u("microgram", "µg", 1e-9), u("nanogram", "ng", 1e-12), u("metric tonne",
-                "t", 1000, ["tonne"]), u("quintal", "q", 100), u("kilotonne", "kt",
-                1e6), u("pound", "lb", 0.45359237), u("ounce (avoirdupois)", "oz",
-                0.028349523125), u("stone", "st", 6.35029318), u("hundredweight (US)", "cwt",
-                45.359237), u("hundredweight (UK)", "cwt", 50.80234544), u("short ton (US)",
-                "ton", 907.18474), u("long ton (UK)", "long ton", 1016.0469088), u("grain",
-                "gr", 0.00006479891), u("carat", "ct", 0.0002), u("dalton / atomic mass unit",
-                "Da", 1.66053906660e-27, ["u"]), u("troy ounce", "ozt",
-                0.0311034768), u("troy pound", "lb t", 0.3732417216), u("slug", "slug",
-                14.59390294), u("tola / bhori", "tola / ভরি", 0.0116638125, ["bhori", "ভরি",
-                "তোলা"]), u("masha", "masha", 0.000972, ["মাশা"]), u("ratti", "ratti",
-                0.0001215, ["রতি"])
-            ] },
-        time: { label: "Time",
-        note: "Exact SI time units plus conventional calendar-independent durations.", base:
-        "second", units: [
-                u("second", "s", 1), u("millisecond", "ms", 1e-3), u("microsecond", "µs",
-                1e-6), u("nanosecond", "ns", 1e-9), u("picosecond", "ps", 1e-12), u("minute",
-                "min", 60), u("hour", "h", 3600), u("day", "d", 86400), u("week", "wk",
-                604800), u("fortnight", "fortnight", 1209600), u("Julian year", "a",
-                31557600), u("decade", "decade", 315576000), u("century", "century", 3155760000)
-            ] },
-        temperature: { label: "Temperature",
-        note:
-        "Temperature scales use affine/nonlinear conversion rather than a simple multiplier.",
-        base: "kelvin", units: [
-                { name: "kelvin", symbol: "K", toBase: v => v, fromBase: v => v },
-                { name: "Celsius", symbol: "°C", toBase: v => v + 273.15,
-                fromBase: v => v - 273.15 },
-                { name: "Fahrenheit", symbol: "°F", toBase: v => (v - 32) * 5 / 9 + 273.15,
-                fromBase: v => (v - 273.15) * 9 / 5 + 32 },
-                { name: "Rankine", symbol: "°R", toBase: v => v * 5 / 9, fromBase: v => v * 9 / 5 },
-                { name: "Réaumur", symbol: "°Ré", toBase: v => v * 1.25 + 273.15,
-                fromBase: v => (v - 273.15) * 0.8 },
-                { name: "Rømer", symbol: "°Rø", toBase: v => (v - 7.5) * 40 / 21 + 273.15,
-                fromBase: v => (v - 273.15) * 21 / 40 + 7.5 },
-                { name: "Delisle", symbol: "°De", toBase: v => 273.15 - v * 2 / 3,
-                fromBase: v => (273.15 - v) * 1.5 },
-                { name: "Newton", symbol: "°N", toBase: v => v * 100 / 33 + 273.15,
-                fromBase: v => (v - 273.15) * 33 / 100 }
-            ] },
-        angle: { label: "Plane Angle",
-        note: "Dimensionless SI angle units and common geometric conventions.", base: "radian",
-        units: [
-                u("radian", "rad", 1), u("degree", "°", Math.PI / 180), u("gradian", "gon",
-                Math.PI / 200), u("arcminute", "′", Math.PI / 10800), u("arcsecond", "″",
-                Math.PI / 648000), u("milliradian", "mrad", 1e-3), u("micro-radian", "µrad",
-                1e-6), u("turn / revolution", "turn", 2 * Math.PI), u("quadrant", "quadrant",
-                Math.PI / 2), u("sextant", "sextant", Math.PI / 3), u("octant", "octant",
-                Math.PI / 4)
-            ] },
-        solidangle: { label: "Solid Angle", note: "Three-dimensional angular measure.",
-        base: "steradian", units: [u("steradian", "sr", 1), u("square degree", "deg²",
-        (Math.PI / 180) ** 2), u("square arcminute", "arcmin²",
-        (Math.PI / 10800) ** 2), u("square arcsecond", "arcsec²", (Math.PI / 648000) ** 2)] },
-        speed: { label: "Speed", note: "Linear speed and navigation units.",
-        base: "meter per second", units: [u("meter per second", "m/s", 1),
-        u("kilometer per hour", "km/h", 1 / 3.6), u("mile per hour", "mph",
-        0.44704), u("foot per second", "ft/s", 0.3048), u("knot", "kn",
-        0.5144444444444445), u("Mach (standard sea level)", "Ma", 340.3), u("speed of light",
-        "c", 299792458)] },
-        acceleration: { label: "Acceleration", note: "Change in velocity per time.",
-        base: "meter per second squared", units: [u("meter per second²", "m/s²", 1), u("gal",
-        "Gal", 0.01), u("standard gravity", "g₀", 9.80665), u("foot per second²", "ft/s²",
-        0.3048), u("inch per second²", "in/s²", 0.0254)] },
-        jerk: { label: "Jerk", note: "Rate of change of acceleration.",
-        base: "meter per second cubed", units: [u("meter per second³", "m/s³", 1),
-        u("foot per second³", "ft/s³", 0.3048), u("standard gravity per second", "g/s", 9.80665)] },
-        force: { label: "Force", note: "Mechanical force units.", base: "newton",
-        units: [u("newton", "N", 1), u("kilonewton", "kN", 1000), u("meganewton", "MN", 1e6),
-        u("dyne", "dyn", 1e-5), u("kilogram-force", "kgf", 9.80665), u("gram-force", "gf",
-        0.00980665), u("pound-force", "lbf", 4.4482216152605), u("ounce-force", "ozf",
-        0.27801385095378125), u("poundal", "pdl", 0.138254954376)] },
-        pressure: { label: "Pressure / Stress",
-        note: "Pressure and stress share force-per-area dimensions.", base: "pascal", units:
-        [u("pascal", "Pa", 1), u("kilopascal", "kPa", 1000), u("megapascal", "MPa", 1e6),
-        u("gigapascal", "GPa", 1e9), u("bar", "bar", 1e5), u("millibar", "mbar",
-        100), u("standard atmosphere", "atm", 101325), u("technical atmosphere", "at",
-        98066.5), u("torr", "Torr", 101325 / 760), u("mmHg", "mmHg", 133.322387415), u("psi",
-        "psi", 6894.757293168), u("ksi", "ksi", 6894757.293168), u("psf", "psf",
-        47.88025898033584), u("kgf/cm²", "kgf/cm²", 98066.5), u("kgf/m²", "kgf/m²",
-        9.80665), u("inHg (0 °C)", "inHg", 3386.388640341)] },
-        energy: { label: "Energy / Work / Heat",
-        note: "Mechanical, thermal and electrical energy units.", base: "joule", units:
-        [u("joule", "J", 1), u("kilojoule", "kJ", 1000), u("megajoule", "MJ", 1e6),
-        u("calorie (thermochemical)", "cal", 4.184), u("kilocalorie", "kcal",
-        4184), u("watt-hour", "Wh", 3600), u("kilowatt-hour", "kWh", 3.6e6), u("megawatt-hour",
-        "MWh", 3.6e9), u("BTU (IT)", "BTU", 1055.05585262), u("therm", "thm",
-        105505585.262), u("electronvolt", "eV", 1.602176634e-19), u("kiloelectronvolt", "keV",
-        1.602176634e-16), u("megaelectronvolt", "MeV", 1.602176634e-13), u("erg", "erg",
-        1e-7), u("foot-pound force", "ft·lbf", 1.3558179483314004), u("foot-poundal", "ft·pdl",
-        0.0421401100938048)] },
-        power: { label: "Power",
-        note: "Rate of energy transfer and common horsepower variants.", base: "watt", units:
-        [u("watt", "W", 1), u("kilowatt", "kW", 1000), u("megawatt", "MW", 1e6), u("gigawatt",
-        "GW", 1e9), u("milliwatt", "mW", 1e-3), u("erg per second", "erg/s",
-        1e-7), u("foot-pound-force per second", "ft·lbf/s",
-        1.3558179483314004), u("foot-pound-force per minute", "ft·lbf/min",
-        1.3558179483314004 / 60), u("foot-pound-force per hour", "ft·lbf/h",
-        1.3558179483314004 / 3600), u("horsepower (mechanical)", "hp",
-        745.6998715822702), u("horsepower (metric)", "PS", 735.49875), u("horsepower (UK)",
-        "hp(UK)", 745.6998715822702), u("electrical horsepower", "hp(E)",
-        746), u("boiler horsepower", "bhp", 9810.0)] },
-        torque: { label: "Torque", note: "Moment of force.", base: "newton meter",
-        units: [u("newton meter", "N·m", 1), u("kilonewton meter", "kN·m", 1000),
-        u("dyne centimeter", "dyn·cm", 1e-7), u("kilogram-force meter", "kgf·m",
-        9.80665), u("pound-force foot", "lbf·ft", 1.3558179483314004), u("pound-force inch",
-        "lbf·in", 0.1129848290276167)] },
-        frequency: { label: "Frequency",
-        note: "Cycles, revolutions and common radio/technical scales.", base: "hertz", units:
-        [u("hertz", "Hz", 1), u("kilohertz", "kHz", 1e3), u("megahertz", "MHz", 1e6),
-        u("gigahertz", "GHz", 1e9), u("terahertz", "THz", 1e12), u("revolution per minute",
-        "rpm", 1 / 60), u("revolution per second", "rps", 1)] },
-        flow: { label: "Volumetric Flow", note: "Volume transported per unit time.",
-        base: "cubic meter per second", units: [u("m³/s", "m³/s", 1), u("L/s", "L/s", 0.001),
-        u("L/min", "L/min", 0.001 / 60), u("mL/s", "mL/s", 1e-6), u("US gallon per minute",
-        "US gpm", 0.003785411784 / 60), u("Imperial gallon per minute", "imp gpm",
-        0.00454609 / 60), u("cubic foot per second", "ft³/s",
-        0.028316846592), u("cubic foot per minute", "ft³/min", 0.028316846592 / 60)] },
-        massflow: { label: "Mass Flow", note: "Mass transported per unit time.",
-        base: "kilogram per second", units: [u("kilogram per second", "kg/s", 1),
-        u("kilogram per hour", "kg/h", 1 / 3600), u("gram per second", "g/s",
-        0.001), u("gram per minute", "g/min", 0.001 / 60), u("pound per second", "lb/s",
-        0.45359237), u("pound per minute", "lb/min", 0.45359237 / 60), u("pound per hour",
-        "lb/h", 0.45359237 / 3600), u("tonne per hour", "t/h", 1000 / 3600)] },
-        density: { label: "Density", note: "Mass per unit volume.",
-        base: "kilogram per cubic meter", units: [u("kg/m³", "kg/m³", 1), u("g/cm³", "g/cm³",
-        1000), u("kg/L", "kg/L", 1000), u("g/mL", "g/mL", 1000), u("kg/m³ (water approx 4 °C)",
-        "kg/m³ water", 1000), u("lb/ft³", "lb/ft³", 16.01846337396), u("lb/in³", "lb/in³",
-        27679.9047102), u("lb/gal US", "lb/US gal", 119.8264273)] },
-        specificvolume: { label: "Specific Volume", note: "Volume per unit mass.",
-        base: "cubic meter per kilogram", units: [u("m³/kg", "m³/kg", 1), u("L/kg", "L/kg",
-        0.001), u("cm³/g", "cm³/g", 1e-6 / 0.001), u("ft³/lb", "ft³/lb",
-        0.0624279606), u("gal US/lb", "US gal/lb", 0.00834540445)] },
-        viscdyn: { label: "Dynamic Viscosity", note: "Absolute/dynamic viscosity.",
-        base: "pascal second", units: [u("pascal second", "Pa·s", 1), u("millipascal second",
-        "mPa·s", 1e-3), u("poise", "P", 0.1), u("centipoise", "cP", 0.001), u("reyn", "reyn",
-        68947.57293168)] },
-        visckin: { label: "Kinematic Viscosity", note: "Dynamic viscosity divided by density.",
-        base: "square meter per second", units: [u("m²/s", "m²/s", 1), u("cm²/s", "cm²/s",
-        1e-4), u("stokes", "St", 1e-4), u("centistokes", "cSt", 1e-6), u("ft²/s", "ft²/s",
-        0.09290304)] },
-        surface: { label: "Surface Tension", note: "Force per unit length.",
-        base: "newton per meter", units: [u("newton per meter", "N/m", 1),
-        u("dyne per centimeter", "dyn/cm", 0.001), u("millinewton per meter", "mN/m",
-        0.001), u("pound-force per foot", "lbf/ft", 14.59390294), u("pound-force per inch",
-        "lbf/in", 175.12683528)] },
-        heatcap: { label: "Heat Capacity", note: "Energy per temperature interval.",
-        base: "joule per kelvin", units: [u("joule per kelvin", "J/K", 1),
-        u("kilojoule per kelvin", "kJ/K", 1000), u("calorie per kelvin", "cal/K",
-        4.184), u("BTU per °F", "BTU/°F", 1899.100534716)] },
-        heatcond: { label: "Thermal Conductivity",
-        note: "Heat conducted per area, time and temperature gradient.", base:
-        "watt per meter kelvin", units: [u("W/(m·K)", "W/m·K", 1), u("mW/(m·K)", "mW/m·K",
-        0.001), u("BTU/(h·ft·°F)", "BTU/h·ft·°F", 1.730735), u("cal/(s·cm·°C)", "cal/s·cm·°C",
-        418.4)] },
-        thermalres: { label: "Thermal Resistance",
-        note: "Temperature difference per unit power.", base: "kelvin per watt", units:
-        [u("kelvin per watt", "K/W", 1), u("degree Celsius per watt", "°C/W", 1),
-        u("degree Fahrenheit per watt", "°F/W", 5 / 9), u("degree Fahrenheit hour per BTU",
-        "°F·h/BTU", 1 / 0.29307107)] },
-        current: { label: "Electric Current", note: "Charge flow per unit time.",
-        base: "ampere", units: [u("ampere", "A", 1), u("milliampere", "mA", 1e-3),
-        u("microampere", "µA", 1e-6), u("nanoampere", "nA", 1e-9), u("kiloampere", "kA", 1e3)] },
-        charge: { label: "Electric Charge", note: "Electric charge quantities.",
-        base: "coulomb", units: [u("coulomb", "C", 1), u("millicoulomb", "mC", 1e-3),
-        u("microcoulomb", "µC", 1e-6), u("nanocoulomb", "nC", 1e-9), u("ampere-hour", "Ah",
-        3600), u("milliampere-hour", "mAh", 3.6), u("faraday (elementary charge per mole)", "F",
-        96485.33212)] },
-        voltage: { label: "Voltage / Potential", note: "Electric potential difference.",
-        base: "volt", units: [u("volt", "V", 1), u("millivolt", "mV", 1e-3), u("microvolt",
-        "µV", 1e-6), u("kilovolt", "kV", 1e3), u("megavolt", "MV", 1e6), u("statvolt", "statV",
-        299.792458), u("abvolt", "abV", 1e-8)] },
-        resistance: { label: "Electrical Resistance",
-        note: "Ohmic resistance and engineering units.", base: "ohm", units: [u("ohm", "Ω", 1),
-        u("milliohm", "mΩ", 1e-3), u("microohm", "µΩ", 1e-6), u("kilohm", "kΩ",
-        1e3), u("megohm", "MΩ", 1e6), u("abohm", "abΩ", 1e-9)] },
-        conductance: { label: "Electrical Conductance", note: "Reciprocal of resistance.",
-        base: "siemens", units: [u("siemens", "S", 1), u("millisiemens", "mS", 1e-3),
-        u("microsiemens", "µS", 1e-6), u("kilosiemens", "kS", 1e3), u("abmho", "abmho", 1e9)] },
-        capacitance: { label: "Capacitance", note: "Stored electric charge per potential.",
-        base: "farad", units: [u("farad", "F", 1), u("millifarad", "mF", 1e-3), u("microfarad",
-        "µF", 1e-6), u("nanofarad", "nF", 1e-9), u("picofarad", "pF", 1e-12), u("abfarad",
-        "abF", 1e9), u("statfarad", "statF", 1.1123470522803e-12)] },
-        inductance: { label: "Inductance", note: "Magnetic/electromagnetic inductance.",
-        base: "henry", units: [u("henry", "H", 1), u("millihenry", "mH", 1e-3), u("microhenry",
-        "µH", 1e-6), u("nanohenry", "nH", 1e-9), u("abhenry", "abH", 1e-9), u("stathenry",
-        "statH", 8.9875517923e11)] },
-        magflux: { label: "Magnetic Flux", note: "Magnetic flux in SI and CGS conventions.",
-        base: "weber", units: [u("weber", "Wb", 1), u("milliweber", "mWb", 1e-3), u("maxwell",
-        "Mx", 1e-8), u("volt second", "V·s", 1)] },
-        magdensity: { label: "Magnetic Flux Density", note: "Magnetic flux per unit area.",
-        base: "tesla", units: [u("tesla", "T", 1), u("millitesla", "mT", 1e-3), u("microtesla",
-        "µT", 1e-6), u("gauss", "G", 1e-4), u("kilogauss", "kG",
-        0.1), u("maxwell per square centimeter", "Mx/cm²", 1e-4)] },
-        efield: { label: "Electric Field Strength", note: "Potential per distance.",
-        base: "volt per meter", units: [u("volt per meter", "V/m", 1), u("volt per centimeter",
-        "V/cm", 100), u("kilovolt per meter", "kV/m", 1000), u("statvolt per centimeter",
-        "statV/cm", 29979.2458)] },
-        info: { label: "Information",
-        note:
-        "Digital information units. Decimal prefixes use powers of 1000; IEC binary prefixes use powers of 1024.",
-        base: "bit",
-        units: [u("bit", "bit", 1), u("byte", "B", 8), u("kilobit (decimal)", "kbit", 1000), u("megabit (decimal)", "Mbit", 1e6), u("gigabit (decimal)", "Gbit", 1e9), u("terabit (decimal)", "Tbit", 1e12), u("petabit (decimal)", "Pbit", 1e15), u("kilobyte (decimal)", "kB", 8000), u("megabyte (decimal)", "MB", 8e6), u("gigabyte (decimal)", "GB", 8e9), u("terabyte (decimal)", "TB", 8e12), u("petabyte (decimal)", "PB", 8e15), u("kibibit", "Kibit", 1024), u("mebibit", "Mibit", 1024 ** 2), u("gibibit", "Gibit", 1024 ** 3), u("tebibit", "Tibit", 1024 ** 4), u("kibibyte", "KiB", 8 * 1024), u("mebibyte", "MiB", 8 * 1024 ** 2), u("gibibyte", "GiB", 8 * 1024 ** 3), u("tebibyte", "TiB", 8 * 1024 ** 4), u("pebibyte", "PiB", 8 * 1024 ** 5)] },
-        datarate: { label: "Data Rate", note: "Transmission and storage throughput.",
-        base: "bit per second", units: [u("bit per second", "bit/s", 1), u("kilobit per second",
-        "kbit/s", 1000), u("megabit per second", "Mbit/s", 1e6), u("gigabit per second",
-        "Gbit/s", 1e9), u("terabit per second", "Tbit/s", 1e12), u("byte per second", "B/s",
-        8), u("kilobyte per second", "kB/s", 8000), u("megabyte per second", "MB/s",
-        8e6), u("gigabyte per second", "GB/s", 8e9), u("kibibit per second", "Kibit/s",
-        1024), u("mebibit per second", "Mibit/s", 1024 ** 2), u("gibibit per second", "Gibit/s",
-        1024 ** 3)] },
-        luminousintensity: { label: "Luminous Intensity", note: "Photometric base quantity.",
-        base: "candela", units: [u("candela", "cd", 1), u("millicandela", "mcd", 1e-3),
-        u("kilocandela", "kcd", 1000)] },
-        luminousflux: { label: "Luminous Flux",
-        note: "Visible-light power weighted by human photopic response.", base: "lumen", units:
-        [u("lumen", "lm", 1), u("kilolumen", "klm", 1000), u("megalumen", "Mlm", 1e6)] },
-        illuminance: { label: "Illuminance", note: "Luminous flux per unit area.", base: "lux",
-        units: [u("lux", "lx", 1), u("foot-candle", "fc", 10.76391041671), u("phot", "ph",
-        10000), u("nox", "nx", 0.001)] },
-        luminance: { label: "Luminance", note: "Luminous intensity per projected area.",
-        base: "candela per square meter", units: [u("candela per square meter", "cd/m²", 1),
-        u("nit", "nit", 1), u("stilb", "sb", 10000), u("apostilb", "asb",
-        1 / Math.PI), u("lambert", "L", 3183.098861837907)] },
-        radioactivity: { label: "Radioactivity", note: "Activity of radioactive decay.",
-        base: "becquerel", units: [u("becquerel", "Bq", 1), u("kilobecquerel", "kBq", 1e3),
-        u("megabecquerel", "MBq", 1e6), u("gigabecquerel", "GBq", 1e9), u("curie", "Ci",
-        3.7e10), u("millicurie", "mCi", 3.7e7), u("microcurie", "µCi", 3.7e4), u("nanocurie",
-        "nCi", 37), u("rutherford", "Rd", 1e6)] },
-        dose: { label: "Absorbed Dose", note: "Ionizing radiation energy absorbed per mass.",
-        base: "gray", units: [u("gray", "Gy", 1), u("milligray", "mGy", 1e-3), u("microgray",
-        "µGy", 1e-6), u("rad", "rad", 0.01), u("kilogray", "kGy", 1000)] },
-        doseeq: { label: "Equivalent Dose", note: "Radiation dose equivalent/weighted dose.",
-        base: "sievert", units: [u("sievert", "Sv", 1), u("millisievert", "mSv", 1e-3),
-        u("microsievert", "µSv", 1e-6), u("rem", "rem", 0.01), u("millirem", "mrem", 1e-5)] },
-        catalytic: { label: "Catalytic Activity",
-        note: "Catalyst amount-of-substance conversion rate.", base: "katal", units: [u("katal",
-        "kat", 1), u("mole per second", "mol/s", 1), u("nanokatal", "nkat",
-        1e-9), u("microkatal", "µkat", 1e-6), u("enzyme unit", "U", 1e-6 / 60)] },
-        amount: { label: "Amount of Substance",
-        note:
-        "Chemical amount. One mole contains exactly the Avogadro constant number of entities.",
-        base: "mole", units: [u("mole", "mol", 1), u("millimole", "mmol", 1e-3), u("micromole",
-        "µmol", 1e-6), u("nanomole", "nmol", 1e-9), u("kilomole", "kmol",
-        1000), u("entity count", "entities", 1 / 6.02214076e23)] },
-        molarity: { label: "Amount Concentration",
-        note: "Molar concentration / amount concentration.", base: "mole per cubic meter",
-        units: [u("mol/m³", "mol/m³", 1), u("mol/L", "mol/L", 1000), u("mmol/L", "mmol/L", 1),
-        u("µmol/L", "µmol/L", 0.001), u("mol/cm³", "mol/cm³", 1e6)] },
-        molality: { label: "Molality", note: "Amount of solute per mass of solvent.",
-        base: "mole per kilogram", units: [u("mol/kg", "mol/kg", 1), u("mmol/kg", "mmol/kg",
-        1e-3), u("mol/g", "mol/g", 1000)] },
-        molarmass: { label: "Molar Mass", note: "Mass per amount of substance.",
-        base: "kilogram per mole", units: [u("kg/mol", "kg/mol", 1), u("g/mol", "g/mol", 1e-3),
-        u("mg/mmol", "mg/mmol", 1e-3), u("lb/mol", "lb/mol", 0.45359237)] },
-        wavenumber: { label: "Wavenumber", note: "Inverse wavelength.", base: "per meter",
-        units: [u("per meter", "m⁻¹", 1), u("per centimeter", "cm⁻¹", 100), u("diopter", "D", 1)] },
-        permeability: { label: "Permeability",
-        note: "Porous-medium permeability in SI square metres and Darcy units.", base:
-        "square meter", units: [u("square meter", "m²", 1), u("darcy", "D", 9.869233e-13),
-        u("millidarcy", "mD", 9.869233e-16)] },
-        fuel: { label: "Fuel Economy",
-        note:
-        "Reciprocal-style fuel economy units are handled with their proper nonlinear conversion.",
-        base: "kilometer per liter",
-        units: [{ name: "kilometer per liter", symbol: "km/L", toBase: v => v, fromBase: v => v }, { name: "liter per 100 kilometer", symbol: "L/100 km", toBase: v => 100 / v, fromBase: v => 100 / v }, { name: "miles per US gallon", symbol: "mpg (US)", toBase: v => v * 0.4251437075, fromBase: v => v / 0.4251437075 }, { name: "miles per Imperial gallon", symbol: "mpg (Imp)", toBase: v => v * 0.354006189934, fromBase: v => v / 0.354006189934 }] },
-        concentration: { label: "Dimensionless Ratio / Concentration",
-        note:
-        "Ratios such as percent, parts per million and parts per billion are dimensionless quantities.",
-        base: "one",
-        units: [u("one", "1", 1), u("percent", "%", 0.01), u("per mille", "‰", 0.001), u("parts per million", "ppm", 1e-6), u("parts per billion", "ppb", 1e-9), u("parts per trillion", "ppt", 1e-12), u("basis point", "bp", 1e-4)] },
-    };
-    // Fix explicit Bangladesh area factors using the official/common chain: 1 decimal = 435.6 ft²;
-    // 1 katha = 720 ft²; 1 bigha = 20 katha; 1 kani = 17280 ft²; 1 gonda = 864 ft²;
-    // 1 kora = 216 ft²; 1 kranti = 72 ft²; 1 til = 3.6 ft²; 1 chatak = 45 ft²;
-    // 1 ojutangsho = 4.356 ft².
-    const bdSqFt = 0.09290304;
-    const areaUnits = U.area.units;
-    const bdFactors = { "Bangladesh decimal / shotangsho": 435.6 * bdSqFt,
-    "Bangladesh katha": 720 * bdSqFt, "Bangladesh bigha": 14400 * bdSqFt, "Bangladesh kani":
-    17280 * bdSqFt, "Bangladesh gonda": 864 * bdSqFt, "Bangladesh kora": 216 * bdSqFt,
-    "Bangladesh kranti / kontho": 72 * bdSqFt, "Bangladesh til": 3.6 * bdSqFt,
-    "Bangladesh chatak": 45 * bdSqFt, "Bangladesh ojutangsho": 4.356 * bdSqFt, "square hat": 3 *
-    3 * bdSqFt };
-    areaUnits.forEach(x => { if (bdFactors[x.name])
-        x.toBase = v => v * bdFactors[x.name]; });
-    const GROUPS = [
-        ["Everyday", ["length", "area", "volume", "mass", "time", "temperature", "angle",
-        "speed", "fuel"]],
-        ["Engineering", ["acceleration", "jerk", "force", "pressure", "energy", "power",
-        "torque", "frequency", "flow", "massflow", "density", "specificvolume", "viscdyn",
-        "visckin", "surface", "heatcap", "heatcond", "thermalres"]],
-        ["Electrical & magnetic", ["current", "charge", "voltage", "resistance", "conductance",
-        "capacitance", "inductance", "magflux", "magdensity", "efield"]],
-        ["Computing", ["info", "datarate"]],
-        ["Light & radiation", ["luminousintensity", "luminousflux", "illuminance", "luminance",
-        "radioactivity", "dose", "doseeq"]],
-        ["Chemistry & physics", ["solidangle", "catalytic", "amount", "molarity", "molality",
-        "molarmass", "wavenumber", "permeability", "concentration"]]
-    ];
-    function unitSearchText(unit) { return
-    `${unit.name} ${unit.symbol} ${(unit.aliases || []).join(" ")}`.toLowerCase(); }
-    function allUnits(cat) { return U[cat]?.units || []; }
-    function unitName(u) { return `${u.name} (${u.symbol})`; }
-    function getCat() { return U[state.category]; }
-    function convertValue(value, from, to) { const units = allUnits(state.category);
-    const f = units[from], t = units[to]; if (!f || !t)
-        throw new Error("Unknown unit"); const base = f.toBase(value);
-        if (typeof t.fromBase === "function")
-        return t.fromBase(base); const oneBase = t.toBase(1);
-        if (!Number.isFinite(oneBase) || oneBase === 0)
-        throw new Error("Invalid destination unit"); return base / oneBase; }
-    function toBaseValue(value, unit) { return unit.toBase(value); }
-    function populateCategories() {
-        const q = els.catSearch.value.trim().toLowerCase();
-        els.catList.replaceChildren();
-        GROUPS.forEach(([group,
-        ids]) => { const filtered = ids.filter(id => { const c = U[id]; return c && (!q ||
-        `${c.label} ${c.note}`.toLowerCase().includes(q)); }); if (!filtered.length)
-            return; const g = document.createElement("div"); g.className = "group-title";
-            g.textContent = group; els.catList.appendChild(g);
-            filtered.forEach(id => { const b = document.createElement("button"); b.className =
-            `cat ${id === state.category ? "active" : ""}`;
-            const span = document.createElement("span"); span.textContent = U[id].label;
-            const small = document.createElement("small");
-            small.textContent = allUnits(id).length; b.append(span, small);
-            b.onclick = () => selectCategory(id); els.catList.appendChild(b); }); });
-        const total = allUnits(state.category).length;
-        els.unitCount.textContent = `${total} units`;
-    }
-    function fillSelect(sel, units, preferred) { sel.replaceChildren(); units.forEach((x,
-    i) => { const o = document.createElement("option"); o.value = String(i);
-    o.textContent = unitName(x); sel.appendChild(o); }); if (preferred != null && units[preferred])
-        sel.value = String(preferred); }
-    function selectCategory(id) { state.category = id; const c = getCat();
-    els.catTitle.textContent = c.label; els.catNote.textContent = c.note;
-    els.amount.value = state.category === "temperature" ? 0 : 1;
-    els.tableWrap.classList.add("hidden"); els.basis.classList.add("hidden");
-    fillSelect(els.fromUnit, c.units, 0); fillSelect(els.toUnit, c.units,
-    1 < c.units.length ? 1 : 0); if (id === "area")
-        els.toUnit.value = String(Math.min(1, c.units.length - 1)); updateConversion();
-        populateCategories(); savePrefs(); }
-    function updateConversion() {
-        const c = getCat(), units = c.units, value = Number(els.amount.value), fi =
-        Number(els.fromUnit.value), ti = Number(els.toUnit.value);
-        if (!Number.isFinite(value) || !units[fi] || !units[ti])
-            return;
-        let out;
-        try {
-            out = convertValue(value, fi, ti);
-        }
-        catch {
-            out = NaN;
-        }
-        els.resultValue.textContent = format(out);
-        els.resultUnit.textContent = unitName(units[ti]);
-        els.formula.textContent =
-        `${format(value)} ${units[fi].symbol} = ${format(out)} ${units[ti].symbol}`;
-        els.resultStatus.textContent = c.base === units[ti].name ? "SI/base-unit result" :
-        "Converted result";
-        state.lastResult = out;
-        state.lastText = `${format(out)} ${units[ti].symbol}`;
-        savePrefs();
-        if (state.category === "area") {
-            els.basis.classList.remove("hidden");
-            els.basis.className = "basis warn";
-            els.basis.textContent =
-            "Bangladesh land note: 1 decimal/shotangsho = 435.6 ft²; 1 katha ≈ 720 ft²; 1 bigha = 20 katha; 1 kani = 17,280 ft². Regional deed/mouza practice can differ. The Bangladesh Ministry of Land publishes these relationships and also notes approximate figures.";
-        }
-    }
-    function showAllUnits() { const c = getCat(), value = Number(els.amount.value),
-    fi = Number(els.fromUnit.value); if (!Number.isFinite(value))
-        return; els.allTable.replaceChildren(); c.units.forEach((unit,
-        i) => { const tr = document.createElement("tr"), td1 = document.createElement("td"),
-        td2 = document.createElement("td"), td3 = document.createElement("td"), td4 =
-        document.createElement("td"); td1.textContent = unit.name; const v = convertValue(value,
-        fi, i); td2.textContent = format(v); td3.textContent = unit.symbol;
-        const copy = document.createElement("button"); copy.className = "copy";
-        copy.textContent = "Copy";
-        copy.onclick = () => copyText(`${format(v, 12)} ${unit.symbol}`).then(() =>
-        notify("Copied.")); td4.appendChild(copy); tr.append(td1, td2, td3, td4);
-        els.allTable.appendChild(tr); }); els.tableWrap.classList.remove("hidden"); }
-    function renderCoverage() { els.coverageCards.replaceChildren(); GROUPS.forEach(([group,
-    ids]) => { ids.forEach(id => { const d = document.createElement("div"); d.className =
-    "tool-box"; const b = document.createElement("b"); b.textContent = U[id].label;
-    const p = document.createElement("p"); p.textContent = `${allUnits(id).length} units`;
-    d.append(b, p); els.coverageCards.appendChild(d); }); }); }
-    function updateQuick() {
-        const b = Number(els.pctBase.value), p = Number(els.pctRate.value);
-        els.pctOut.textContent = Number.isFinite(b) && Number.isFinite(p) ?
-        `${format(p)}% of ${format(b)} = ${format(b * p / 100)}` : "Enter valid numbers.";
-        const a = Number(els.lenA.value), d = Number(els.lenB.value);
-        els.areaOut.textContent = Number.isFinite(a) && Number.isFinite(d) ?
-        `${format(a)} × ${format(d)} = ${format(a * d)} m²` : "Enter valid numbers.";
-        const mode = els.sdMode.value;
-        els.sdOut.textContent = mode === "speed" ?
-        "Use the scientific calculator for arbitrary distance/time units." : mode === "distance"
-        ? "Use the scientific calculator for arbitrary speed/time units." :
-        "Use the scientific calculator for arbitrary distance/speed units.";
-    }
-    // ---------------- Safe scientific calculator ----------------
-    const TOK = { number: /^(?:\d+(?:\.\d*)?|\.\d+)(?:e[+\-]?\d+)?/i,
-    ident: /^[A-Za-z_πµΩ]+(?:[A-Za-z_0-9]*)?/ };
-    const CONST = { pi: Math.PI, π: Math.PI, e: Math.E, c: 299792458, g: 9.80665,
-    G: 6.67430e-11, h: 6.62607015e-34, kB: 1.380649e-23, NA: 6.02214076e23, echarge:
-    1.602176634e-19 };
-    const FUN = { sin: x => state.angle === "DEG" ? Math.sin(x * Math.PI / 180) : Math.sin(x),
-    cos: x => state.angle === "DEG" ? Math.cos(x * Math.PI / 180) : Math.cos(x), tan: x =>
-    state.angle === "DEG" ? Math.tan(x * Math.PI / 180) : Math.tan(x), asin: x => state.angle
-    === "DEG" ? Math.asin(x) * 180 / Math.PI : Math.asin(x), acos: x => state.angle === "DEG" ?
-    Math.acos(x) * 180 / Math.PI : Math.acos(x), atan: x => state.angle === "DEG" ? Math.atan(x)
-    * 180 / Math.PI : Math.atan(x), sqrt: Math.sqrt, cbrt: Math.cbrt, ln: Math.log, log:
-    Math.log10, exp: Math.exp, abs: Math.abs, floor: Math.floor, ceil: Math.ceil, round:
-    Math.round };
-    const isDigit = c => /[0-9.]/.test(c), isAlpha = c => /[A-Za-z_πµΩ]/.test(c);
-    function tokenize(s) { const out = []; let i = 0; while (i < s.length) {
-        const c = s[i];
-        if (/\s/.test(c)) {
-            i++;
-            continue;
-        }
-        if ("+-*/^%(),".includes(c)) {
-            out.push(c);
-            i++;
-            continue;
-        }
-        if (isDigit(c)) {
-            const m = s.slice(i).match(TOK.number);
-            if (!m)
-                throw Error("Invalid number");
-            out.push({ t: "num", v: Number(m[0]) });
-            i += m[0].length;
-            continue;
-        }
-        if (isAlpha(c)) {
-            const m = s.slice(i).match(TOK.ident);
-            const id = m[0];
-            out.push({ t: "id", v: id });
-            i += id.length;
-            continue;
-        }
-        throw Error(`Unexpected character: ${c}`);
-    } return out; }
-    function parseExpression(s) {
-        const t = tokenize(s);
-        let p = 0;
-        const peek = () => t[p];
-        const eat = x => { if ((peek() === x) || peek()?.t === x || peek()?.v === x) {
-            return t[p++];
-        } throw Error(`Expected ${x}`); };
-        const primary = () => { const x = peek(); if (!x)
-            throw Error("Missing value"); if (x === "(") {
-            eat("(");
-            const v = add();
-            eat(")");
-            return v;
-        } if (x === "-") {
-            eat("-");
-            return -primary();
-        } if (x === "+") {
-            eat("+");
-            return primary();
-        } if (x.t === "num") {
-            p++;
-            return x.v;
-        } if (x.t === "id") {
-            p++;
-            const name = x.v;
-            if (FUN[name]) {
-                eat("(");
-                const v = add();
-                eat(")");
-                return FUN[name](v);
-            }
-            if (CONST[name] !== undefined)
-                return CONST[name];
-            throw Error(`Unknown function or constant: ${name}`);
-        } throw Error("Invalid expression"); };
-        const power = () => { let v = primary(); if (peek() === "^") {
-            eat("^");
-            v = Math.pow(v, power());
-        } return v; };
-        const term = () => { let v = power();
-        while (peek() === "*" || peek() === "/" || peek() === "%") {
-            const op = eat();
-            const r = power();
-            if (op === '*')
-                v *= r;
-            else if (op === '/')
-                v /= r;
-            else
-                v %= r;
-        } return v; };
-        const add = () => { let v = term(); while (peek() === "+" || peek() === "-") {
-            const op = eat();
-            const r = term();
-            v = op === '+' ? v + r : v - r;
-        } return v; };
-        const v = add();
-        if (p !== t.length)
-            throw Error("Unexpected input at end");
-        if (!Number.isFinite(v))
-            throw Error("Result is not finite");
-        return v;
-    }
-    let calcInput = "";
-    function renderCalc() { els.calcExpr.textContent = calcInput || "0"; try {
-        const v = parseExpression(calcInput || "0");
-        els.calcAnswer.textContent = format(v, 12);
-        state.lastResult = v;
-        state.lastText = format(v, 12);
-    }
-    catch {
-        els.calcAnswer.textContent = "…";
-    } }
-    function appendCalc(s) { calcInput += s; renderCalc(); }
-    function backCalc() { calcInput = calcInput.slice(0, -1); renderCalc(); }
-    function clearCalc() { calcInput = ""; renderCalc(); }
-    function calculate() { if (!calcInput)
-        return; try {
-        const v = parseExpression(calcInput);
-        els.calcAnswer.textContent = format(v, 12);
-        state.lastResult = v;
-        state.lastText = format(v, 12);
-        pushHistory(calcInput, format(v, 12));
-        calcInput = String(v);
-        renderCalc();
-    }
-    catch (e) {
-        notify(e.message || "Invalid expression", "err");
-    } }
-    const keyDefs = [
-        ["7", "7"], ["8", "8"], ["9", "9"], ["÷", "/"], ["sin", "sin("],
-        ["4", "4"], ["5", "5"], ["6", "6"], ["×", "*"], ["cos", "cos("],
-        ["1", "1"], ["2", "2"], ["3", "3"], ["−", "-"], ["tan", "tan("],
-        ["0", "0"], [".", "."], ["(", "("], [")", ")"], ["+", "+"],
-        ["π", "π"], ["e", "e"], ["^", "^"], ["%", "%"], ["=", "="],
-        ["√", "sqrt("], ["x²", "^2"], ["x³", "^3"], ["ln", "ln("], ["log", "log("],
-        ["asin", "asin("], ["acos", "acos("], ["atan", "atan("], ["abs", "abs("], ["cbrt", "cbrt("],
-        ["exp", "exp("], ["floor", "floor("], ["ceil", "ceil("], ["round", "round("], ["C", "clear"]
-    ];
-    function renderKeys() { els.calcKeys.replaceChildren(); keyDefs.forEach(([label,
-    val]) => { const b = document.createElement("button");
-    b.className =
-    `key ${val === '=' ? 'eq' : (['+', '-', '*', '/', '%', '^'].includes(val) ? 'op' : '')} ${/^[a-zA-Z√π]/.test(label) ? 'fn' : ''}`; b.textContent = label; b.onclick = () => { if (val === '=')
-        calculate();
-    else if (val === 'clear')
-        clearCalc();
-    else if (val === '^2') {
-        appendCalc('^2');
-    }
-    else if (val === '^3') {
-        appendCalc('^3');
-    }
-    else
-        appendCalc(val); }; els.calcKeys.appendChild(b); }); }
-    function renderHistory() { els.history.replaceChildren(); if (!state.history.length) {
-        const p = document.createElement("p");
-        p.className = "note";
-        p.textContent = "No calculations yet.";
-        els.history.appendChild(p);
-        return;
-    } state.history.forEach(h => { const d = document.createElement("div"); d.className =
-    "hist-item"; const e = document.createElement("div"); e.className = "hist-expr";
-    e.textContent = h.expr; const r = document.createElement("div"); r.className = "hist-res";
-    r.textContent = h.result; d.append(e, r); d.onclick = () => { calcInput = h.expr;
-    renderCalc(); }; els.history.appendChild(d); }); }
-    function renderConstants() { els.constants.replaceChildren(); [["π", "pi"], ["c", "c"],
-    ["g", "g"], ["G", "G"], ["h", "h"], ["kB", "kB"], ["Nₐ", "NA"], ["e", "e"]].forEach(([label,
-    key]) => { const b = document.createElement("button"); b.className = "const";
-    const t = document.createElement("b"); t.textContent = label;
-    const s = document.createElement("span"); s.textContent = format(CONST[key], 8); b.append(t,
-    s); b.onclick = () => appendCalc(key); els.constants.appendChild(b); }); }
-    function setMode(calc) { els.converterMode.classList.toggle("hidden", calc);
-    els.calculatorMode.classList.toggle("hidden", !calc);
-    els.mConverter.className = `btn ${calc ? 'secondary' : 'accent'}`;
-    els.mCalculator.className = `btn ${calc ? 'accent' : 'secondary'}`; }
-    // UI events
-    els.mConverter.onclick = () => setMode(false);
-    els.mCalculator.onclick = () => setMode(true);
-    els.catSearch.oninput = populateCategories;
-    els.amount.oninput = updateConversion;
-    els.precision.onchange = () => { updateConversion(); savePrefs(); };
-    els.fromUnit.onchange = updateConversion;
-    els.toUnit.onchange = updateConversion;
-    els.convertBtn.onclick = updateConversion;
-    els.allUnits.onclick = showAllUnits;
-    els.swapUnits.onclick = () => { const a = els.fromUnit.value;
-    els.fromUnit.value = els.toUnit.value; els.toUnit.value = a; updateConversion(); };
-    els.copyResult.onclick = () => copyText(state.lastText).then(() => notify("Result copied."));
-    els.resetConverter.onclick = () => selectCategory("length");
-    [els.pctBase, els.pctRate, els.lenA, els.lenB].forEach(x => x.oninput = updateQuick);
-    els.sdMode.onchange = updateQuick;
-    els.angleToggle.onclick = () => { state.angle = state.angle === 'DEG' ? 'RAD' : 'DEG';
-    els.angleToggle.textContent = state.angle;
-    els.angleModeLabel.textContent = `Angle: ${state.angle}`; renderCalc(); };
-    els.backspace.onclick = backCalc;
-    els.clearCalc.onclick = clearCalc;
-    els.memoryCopy.onclick = () => copyText(state.lastText).then(() => notify("Answer copied."));
-    els.clearHistory.onclick = () => { state.history = []; try {
-        localStorage.removeItem(STORAGE.history);
-    }
-    catch { } renderHistory(); };
-    document.addEventListener("keydown", e => { if (els.calculatorMode.classList.contains("hidden"))
-        return; if (e.ctrlKey || e.metaKey || e.altKey)
-        return; if ((e.key >= '0' && e.key <= '9') || "+-*/^().%".includes(e.key)) {
-        appendCalc(e.key);
-        e.preventDefault();
-    }
-    else if (e.key === 'Enter') {
-        calculate();
-        e.preventDefault();
-    }
-    else if (e.key === 'Backspace') {
-        backCalc();
-        e.preventDefault();
-    }
-    else if (e.key === 'Escape') {
-        clearCalc();
-        e.preventDefault();
-    } });
-    // Init
-    renderKeys();
-    renderConstants();
-    loadHistory();
-    renderCoverage();
-    const prefs = loadPrefs();
-    if (prefs.precision)
-        els.precision.value = prefs.precision;
-    if (prefs.category && U[prefs.category])
-        state.category = prefs.category;
-    populateCategories();
+
+    GROUPS.forEach(([group, ids]) => {
+      const filtered = ids.filter(id => {
+        const c = U[id];
+        return c && (!q || `${c.label} ${c.note}`.toLowerCase().includes(q));
+      });
+      if (!filtered.length) return;
+      const g = document.createElement("div");
+      g.className = "group-title";
+      g.textContent = group;
+      els.catList.appendChild(g);
+      filtered.forEach(id => els.catList.appendChild(makeCatButton(id)));
+    });
+
+    els.unitCount.textContent = `${allUnits(state.category).length} units`;
+  }
+
+  function fillSelect(sel, units, preferred) {
+    sel.replaceChildren();
+    units.forEach((x, i) => {
+      const o = document.createElement("option");
+      o.value = String(i);
+      o.textContent = unitName(x);
+      sel.appendChild(o);
+    });
+    if (preferred != null && units[preferred]) sel.value = String(preferred);
+  }
+
+  function selectCategory(id) {
+    state.category = id;
+    pushRecent(id);
     const c = getCat();
     els.catTitle.textContent = c.label;
     els.catNote.textContent = c.note;
+    els.amount.value = state.category === "temperature" ? 0 : 1;
+    els.tableWrap.classList.add("hidden");
+    els.tableControls.classList.add("hidden");
+    els.basis.classList.add("hidden");
     fillSelect(els.fromUnit, c.units, 0);
-    fillSelect(els.toUnit, c.units, c.units.length > 1 ? 1 : 0);
-    if (prefs.amount != null)
-        els.amount.value = prefs.amount;
-    if (prefs.from != null && c.units[prefs.from])
-        els.fromUnit.value = prefs.from;
-    if (prefs.to != null && c.units[prefs.to])
-        els.toUnit.value = prefs.to;
+    fillSelect(els.toUnit, c.units, 1 < c.units.length ? 1 : 0);
+    if (id === "area") els.toUnit.value = String(Math.min(1, c.units.length - 1));
     updateConversion();
-    updateQuick();
-    renderCalc();
-    setMode(false);
-})();
+    populateCategories();
+    savePrefs();
+  }
 
-  </script>
- </body>
+  /* ------------------------------------------------------------
+     Conversion + result
+     ------------------------------------------------------------ */
+  function updateConversion() {
+    const c = getCat(), units = c.units,
+      value = Number(els.amount.value),
+      fi = Number(els.fromUnit.value),
+      ti = Number(els.toUnit.value);
+    if (!Number.isFinite(value) || !units[fi] || !units[ti]) return;
+    let out;
+    try { out = convertValue(value, fi, ti); } catch { out = NaN; }
+    els.resultValue.textContent = format(out);
+    els.resultUnit.textContent = unitName(units[ti]);
+    els.formula.textContent = `${format(value)} ${units[fi].symbol} = ${format(out)} ${units[ti].symbol}`;
+    els.resultStatus.textContent = c.base === units[ti].name ? "SI/base-unit result" : "Converted result";
+    state.lastResult = out;
+    state.lastText = `${format(out)} ${units[ti].symbol}`;
+    savePrefs();
+    if (state.category === "area") {
+      els.basis.classList.remove("hidden");
+      els.basis.textContent =
+        "Bangladesh land note: 1 decimal/shotangsho = 435.6 ft²; 1 katha ≈ 720 ft²; 1 bigha = 20 katha; 1 kani = 17,280 ft². Regional deed/mouza practice can differ. The Bangladesh Ministry of Land publishes these relationships and also notes approximate figures.";
+    }
+  }
+
+  function showAllUnits() {
+    const c = getCat(),
+      value = Number(els.amount.value),
+      fi = Number(els.fromUnit.value);
+    if (!Number.isFinite(value)) return;
+
+    state.allRows = c.units.map((unit, i) => {
+      let v;
+      try { v = convertValue(value, fi, i); } catch { v = NaN; }
+      return { name: unit.name, symbol: unit.symbol, value: v };
+    });
+    state.tableFilter = "";
+    els.tableFilter.value = "";
+    els.tableControls.classList.remove("hidden");
+    renderTableRows();
+    els.tableWrap.classList.remove("hidden");
+  }
+
+  function renderTableRows() {
+    const q = (state.tableFilter || "").trim().toLowerCase();
+    const rows = q
+      ? state.allRows.filter(r => `${r.name} ${r.symbol}`.toLowerCase().includes(q))
+      : state.allRows;
+
+    els.allTable.replaceChildren();
+
+    if (!rows.length) {
+      const tr = document.createElement("tr");
+      const td = document.createElement("td");
+      td.colSpan = 4;
+      td.style.padding = "1rem";
+      td.style.textAlign = "center";
+      td.className = "note";
+      td.textContent = "No units match this filter.";
+      tr.appendChild(td);
+      els.allTable.appendChild(tr);
+      return;
+    }
+
+    rows.forEach(row => {
+      const tr = document.createElement("tr");
+      const td1 = document.createElement("td"); td1.textContent = row.name;
+      const td2 = document.createElement("td"); td2.textContent = format(row.value);
+      const td3 = document.createElement("td"); td3.textContent = row.symbol;
+      const td4 = document.createElement("td");
+      const copy = document.createElement("button");
+      copy.className = "copy";
+      copy.type = "button";
+      copy.textContent = "Copy";
+      copy.onclick = () => copyText(`${format(row.value, 12)} ${row.symbol}`).then(() => notify("Copied."));
+      td4.appendChild(copy);
+      tr.append(td1, td2, td3, td4);
+      els.allTable.appendChild(tr);
+    });
+  }
+
+  function renderCoverage() {
+    els.coverageCards.replaceChildren();
+    GROUPS.forEach(([group, ids]) => {
+      ids.forEach(id => {
+        const d = document.createElement("div");
+        d.className = "tool-box";
+        const b = document.createElement("b"); b.textContent = U[id].label;
+        const p = document.createElement("p"); p.textContent = `${allUnits(id).length} units`;
+        d.append(b, p);
+        els.coverageCards.appendChild(d);
+      });
+    });
+  }
+
+  function updateQuick() {
+    const b = Number(els.pctBase.value), p = Number(els.pctRate.value);
+    els.pctOut.textContent = Number.isFinite(b) && Number.isFinite(p)
+      ? `${format(p)}% of ${format(b)} = ${format(b * p / 100)}`
+      : "Enter valid numbers.";
+    const a = Number(els.lenA.value), d = Number(els.lenB.value);
+    els.areaOut.textContent = Number.isFinite(a) && Number.isFinite(d)
+      ? `${format(a)} × ${format(d)} = ${format(a * d)} m²`
+      : "Enter valid numbers.";
+    const mode = els.sdMode.value;
+    els.sdOut.textContent =
+      mode === "speed" ? "Use the scientific calculator for arbitrary distance/time units."
+      : mode === "distance" ? "Use the scientific calculator for arbitrary speed/time units."
+      : "Use the scientific calculator for arbitrary distance/speed units.";
+  }
+
+  /* ------------------------------------------------------------
+     Scientific calculator (safe parser)
+     ------------------------------------------------------------ */
+  const TOK = {
+    number: /^(?:\d+(?:\.\d*)?|\.\d+)(?:e[+\-]?\d+)?/i,
+    ident:  /^[A-Za-z_πµΩ]+(?:[A-Za-z_0-9]*)?/,
+  };
+  const CONST = {
+    pi: Math.PI, π: Math.PI, e: Math.E, c: 299792458, g: 9.80665,
+    G: 6.67430e-11, h: 6.62607015e-34, kB: 1.380649e-23,
+    NA: 6.02214076e23, echarge: 1.602176634e-19,
+  };
+  const FUN = {
+    sin: x => state.angle === "DEG" ? Math.sin(x * Math.PI / 180) : Math.sin(x),
+    cos: x => state.angle === "DEG" ? Math.cos(x * Math.PI / 180) : Math.cos(x),
+    tan: x => state.angle === "DEG" ? Math.tan(x * Math.PI / 180) : Math.tan(x),
+    asin: x => state.angle === "DEG" ? Math.asin(x) * 180 / Math.PI : Math.asin(x),
+    acos: x => state.angle === "DEG" ? Math.acos(x) * 180 / Math.PI : Math.acos(x),
+    atan: x => state.angle === "DEG" ? Math.atan(x) * 180 / Math.PI : Math.atan(x),
+    sqrt: Math.sqrt, cbrt: Math.cbrt, ln: Math.log, log: Math.log10,
+    exp: Math.exp, abs: Math.abs, floor: Math.floor, ceil: Math.ceil, round: Math.round,
+  };
+  const isDigit = c => /[0-9.]/.test(c);
+  const isAlpha = c => /[A-Za-z_πµΩ]/.test(c);
+
+  function tokenize(s) {
+    const out = []; let i = 0;
+    while (i < s.length) {
+      const c = s[i];
+      if (/\s/.test(c)) { i++; continue; }
+      if ("+-*/^%(),".includes(c)) { out.push(c); i++; continue; }
+      if (isDigit(c)) {
+        const m = s.slice(i).match(TOK.number);
+        if (!m) throw Error("Invalid number");
+        out.push({ t: "num", v: Number(m[0]) }); i += m[0].length; continue;
+      }
+      if (isAlpha(c)) {
+        const m = s.slice(i).match(TOK.ident);
+        const id = m[0];
+        out.push({ t: "id", v: id }); i += id.length; continue;
+      }
+      throw Error(`Unexpected character: ${c}`);
+    }
+    return out;
+  }
+
+  function parseExpression(s) {
+    const t = tokenize(s);
+    let p = 0;
+    const peek = () => t[p];
+    const eat = x => {
+      if ((peek() === x) || peek()?.t === x || peek()?.v === x) return t[p++];
+      throw Error(`Expected ${x}`);
+    };
+    const primary = () => {
+      const x = peek();
+      if (!x) throw Error("Missing value");
+      if (x === "(") { eat("("); const v = add(); eat(")"); return v; }
+      if (x === "-") { eat("-"); return -primary(); }
+      if (x === "+") { eat("+"); return primary(); }
+      if (x.t === "num") { p++; return x.v; }
+      if (x.t === "id") {
+        p++; const name = x.v;
+        if (FUN[name]) { eat("("); const v = add(); eat(")"); return FUN[name](v); }
+        if (CONST[name] !== undefined) return CONST[name];
+        throw Error(`Unknown function or constant: ${name}`);
+      }
+      throw Error("Invalid expression");
+    };
+    const power = () => {
+      let v = primary();
+      if (peek() === "^") { eat("^"); v = Math.pow(v, power()); }
+      return v;
+    };
+    const term = () => {
+      let v = power();
+      while (peek() === "*" || peek() === "/" || peek() === "%") {
+        const op = eat(); const r = power();
+        if (op === '*') v *= r;
+        else if (op === '/') v /= r;
+        else v %= r;
+      }
+      return v;
+    };
+    const add = () => {
+      let v = term();
+      while (peek() === "+" || peek() === "-") {
+        const op = eat(); const r = term();
+        v = op === '+' ? v + r : v - r;
+      }
+      return v;
+    };
+    const v = add();
+    if (p !== t.length) throw Error("Unexpected input at end");
+    if (!Number.isFinite(v)) throw Error("Result is not finite");
+    return v;
+  }
+
+  let calcInput = "";
+  function renderCalc() {
+    els.calcExpr.textContent = calcInput || "0";
+    try {
+      const v = parseExpression(calcInput || "0");
+      els.calcAnswer.textContent = format(v, 12);
+      state.lastResult = v;
+      state.lastText = format(v, 12);
+    } catch {
+      els.calcAnswer.textContent = "…";
+    }
+  }
+  function appendCalc(s) { calcInput += s; renderCalc(); }
+  function backCalc() { calcInput = calcInput.slice(0, -1); renderCalc(); }
+  function clearCalc() { calcInput = ""; renderCalc(); }
+  function calculate() {
+    if (!calcInput) return;
+    try {
+      const v = parseExpression(calcInput);
+      els.calcAnswer.textContent = format(v, 12);
+      state.lastResult = v;
+      state.lastText = format(v, 12);
+      pushHistory(calcInput, format(v, 12));
+      calcInput = String(v);
+      renderCalc();
+    } catch (e) {
+      notify(e.message || "Invalid expression", "err");
+    }
+  }
+
+  const keyDefs = [
+    ["7", "7"], ["8", "8"], ["9", "9"], ["÷", "/"], ["sin", "sin("],
+    ["4", "4"], ["5", "5"], ["6", "6"], ["×", "*"], ["cos", "cos("],
+    ["1", "1"], ["2", "2"], ["3", "3"], ["−", "-"], ["tan", "tan("],
+    ["0", "0"], [".", "."], ["(", "("], [")", ")"], ["+", "+"],
+    ["π", "π"], ["e", "e"], ["^", "^"], ["%", "%"], ["=", "="],
+    ["√", "sqrt("], ["x²", "^2"], ["x³", "^3"], ["ln", "ln("], ["log", "log("],
+    ["asin", "asin("], ["acos", "acos("], ["atan", "atan("], ["abs", "abs("], ["cbrt", "cbrt("],
+    ["exp", "exp("], ["floor", "floor("], ["ceil", "ceil("], ["round", "round("], ["C", "clear"],
+  ];
+
+  function renderKeys() {
+    els.calcKeys.replaceChildren();
+    keyDefs.forEach(([label, val]) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = `key ${
+        val === '=' ? 'eq' :
+        (['+', '-', '*', '/', '%', '^'].includes(val) ? 'op' : '')
+      } ${/^[a-zA-Z√π]/.test(label) ? 'fn' : ''}`;
+      b.textContent = label;
+      b.onclick = () => {
+        if (val === '=') calculate();
+        else if (val === 'clear') clearCalc();
+        else appendCalc(val);
+      };
+      els.calcKeys.appendChild(b);
+    });
+  }
+
+  function renderHistory() {
+    els.history.replaceChildren();
+    if (!state.history.length) {
+      const p = document.createElement("p");
+      p.className = "note";
+      p.style.padding = ".35rem 0";
+      p.textContent = "No calculations yet.";
+      els.history.appendChild(p);
+      return;
+    }
+    state.history.forEach(h => {
+      const d = document.createElement("div");
+      d.className = "hist-item";
+      const e = document.createElement("div"); e.className = "hist-expr"; e.textContent = h.expr;
+      const r = document.createElement("div"); r.className = "hist-res"; r.textContent = h.result;
+      d.append(e, r);
+      d.onclick = () => { calcInput = h.expr; renderCalc(); };
+      els.history.appendChild(d);
+    });
+  }
+
+  function renderConstants() {
+    els.constants.replaceChildren();
+    [["π", "pi"], ["c", "c"], ["g", "g"], ["G", "G"],
+     ["h", "h"], ["kB", "kB"], ["Nₐ", "NA"], ["e", "e"]].forEach(([label, key]) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "const";
+      const t = document.createElement("b"); t.textContent = label;
+      const s = document.createElement("span"); s.textContent = format(CONST[key], 8);
+      b.append(t, s);
+      b.onclick = () => appendCalc(key);
+      els.constants.appendChild(b);
+    });
+  }
+
+  /* ------------------------------------------------------------
+     Mode switching
+     ------------------------------------------------------------ */
+  function setMode(calc) {
+    state.mode = calc ? "calc" : "converter";
+    els.converterMode.classList.toggle("hidden", calc);
+    els.calculatorMode.classList.toggle("hidden", !calc);
+    els.mConverter.setAttribute("aria-selected", String(!calc));
+    els.mCalculator.setAttribute("aria-selected", String(calc));
+  }
+
+  /* ------------------------------------------------------------
+     Wire up
+     ------------------------------------------------------------ */
+  els.mConverter.onclick = () => setMode(false);
+  els.mCalculator.onclick = () => setMode(true);
+
+  els.catSearch.oninput = populateCategories;
+  els.amount.oninput = updateConversion;
+  els.precision.onchange = () => { updateConversion(); savePrefs(); };
+  els.fromUnit.onchange = updateConversion;
+  els.toUnit.onchange = updateConversion;
+  els.convertBtn.onclick = updateConversion;
+  els.allUnits.onclick = showAllUnits;
+  els.tableFilter.oninput = () => {
+    state.tableFilter = els.tableFilter.value;
+    renderTableRows();
+  };
+  els.swapUnits.onclick = () => {
+    const a = els.fromUnit.value;
+    els.fromUnit.value = els.toUnit.value;
+    els.toUnit.value = a;
+    updateConversion();
+  };
+  els.copyResult.onclick = () => copyText(state.lastText).then(() => notify("Result copied."));
+  els.resetConverter.onclick = () => selectCategory("length");
+
+  [els.pctBase, els.pctRate, els.lenA, els.lenB].forEach(x => x.oninput = updateQuick);
+  els.sdMode.onchange = updateQuick;
+
+  els.angleToggle.onclick = () => {
+    state.angle = state.angle === 'DEG' ? 'RAD' : 'DEG';
+    els.angleToggle.textContent = state.angle;
+    els.angleModeLabel.textContent = `Angle: ${state.angle}`;
+    renderCalc();
+  };
+  els.backspace.onclick = backCalc;
+  els.clearCalc.onclick = clearCalc;
+  els.memoryCopy.onclick = () => copyText(state.lastText).then(() => notify("Answer copied."));
+  els.clearHistory.onclick = () => {
+    state.history = [];
+    try { localStorage.removeItem(STORAGE.history); } catch {}
+    renderHistory();
+  };
+
+  els.copyDiag.onclick = () => {
+    const diag = {
+      category: state.category,
+      angle: state.angle,
+      precision: els.precision.value,
+      theme: (() => { try { return document.documentElement.getAttribute('data-theme') || 'system'; } catch { return 'system'; } })(),
+      recent: state.recent.slice(),
+      historyCount: state.history.length,
+      categories: Object.keys(U).length,
+    };
+    copyText(JSON.stringify(diag, null, 2))
+      .then(() => notify("Diagnostics copied."))
+      .catch(() => notify("Copy failed.", "err"));
+  };
+
+  /* Keyboard: calculator mode */
+  document.addEventListener("keydown", e => {
+    if (els.calculatorMode.classList.contains("hidden")) return;
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    if ((e.key >= '0' && e.key <= '9') || "+-*/^().%".includes(e.key)) {
+      appendCalc(e.key); e.preventDefault();
+    } else if (e.key === 'Enter') {
+      calculate(); e.preventDefault();
+    } else if (e.key === 'Backspace') {
+      backCalc(); e.preventDefault();
+    } else if (e.key === 'Escape') {
+      clearCalc(); e.preventDefault();
+    }
+  });
+
+  /* Keyboard: converter mode shortcuts */
+  document.addEventListener("keydown", e => {
+    if (!els.calculatorMode.classList.contains("hidden")) return;
+    const active = document.activeElement;
+    const isTyping = active && (
+      active.tagName === 'INPUT' ||
+      active.tagName === 'TEXTAREA' ||
+      active.tagName === 'SELECT' ||
+      active.isContentEditable
+    );
+    if (e.key === '/' && !isTyping && !e.ctrlKey && !e.metaKey) {
+      e.preventDefault();
+      els.catSearch?.focus();
+      els.catSearch?.select();
+      return;
+    }
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      els.catSearch?.focus();
+      els.catSearch?.select();
+      return;
+    }
+    if (e.key === 'Escape' && active === els.catSearch) {
+      if (els.catSearch.value) {
+        els.catSearch.value = '';
+        populateCategories();
+      } else {
+        els.catSearch.blur();
+      }
+    }
+  });
+
+  /* ------------------------------------------------------------
+     Init
+     ------------------------------------------------------------ */
+  initTheme();
+  loadRecent();
+  renderKeys();
+  renderConstants();
+  loadHistory();
+  renderCoverage();
+
+  const prefs = loadPrefs();
+  if (prefs.precision) els.precision.value = prefs.precision;
+  if (prefs.category && U[prefs.category]) state.category = prefs.category;
+
+  populateCategories();
+  const c = getCat();
+  els.catTitle.textContent = c.label;
+  els.catNote.textContent = c.note;
+  fillSelect(els.fromUnit, c.units, 0);
+  fillSelect(els.toUnit, c.units, c.units.length > 1 ? 1 : 0);
+  if (prefs.amount != null) els.amount.value = prefs.amount;
+  if (prefs.from != null && c.units[prefs.from]) els.fromUnit.value = prefs.from;
+  if (prefs.to != null && c.units[prefs.to]) els.toUnit.value = prefs.to;
+
+  updateConversion();
+  updateQuick();
+  renderCalc();
+  setMode(false);
+})();
+</script>
+</body>
 </html>
